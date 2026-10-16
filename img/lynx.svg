@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Lynx mascot">
+  <g stroke="#33261a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ear tufts -->
+    <path d="M27 14 L23 1" stroke-width="4"/>
+    <path d="M93 14 L97 1" stroke-width="4"/>
+    <!-- ears -->
+    <path d="M24 52 L27 12 L52 36 Z" fill="#d99a5b"/>
+    <path d="M96 52 L93 12 L68 36 Z" fill="#d99a5b"/>
+    <path d="M31 42 L30 24 L43 37 Z" fill="#f2b8a8" stroke-width="2"/>
+    <path d="M89 42 L90 24 L77 37 Z" fill="#f2b8a8" stroke-width="2"/>
+    <!-- head with cheek ruffs -->
+    <path d="M22 62 Q22 34 60 32 Q98 34 98 62 L110 82 L96 82 L101 96 L84 92 Q60 112 36 92 L19 96 L24 82 L10 82 Z" fill="#e8b076"/>
+    <!-- muzzle -->
+    <path d="M42 80 Q42 66 60 66 Q78 66 78 80 Q78 94 60 95 Q42 94 42 80 Z" fill="#fff6e8" stroke-width="2.5"/>
+    <!-- eyes -->
+    <ellipse cx="45" cy="58" rx="7" ry="6.5" fill="#cfe27a"/>
+    <ellipse cx="75" cy="58" rx="7" ry="6.5" fill="#cfe27a"/>
+    <ellipse cx="45" cy="58" rx="2" ry="5" fill="#33261a" stroke="none"/>
+    <ellipse cx="75" cy="58" rx="2" ry="5" fill="#33261a" stroke="none"/>
+    <!-- nose and mouth -->
+    <path d="M55 72 L65 72 L60 78 Z" fill="#e0707a" stroke-width="2"/>
+    <path d="M60 78 Q60 84 53 85 M60 78 Q60 84 67 85" fill="none" stroke-width="2"/>
+    <!-- whiskers -->
+    <path d="M40 80 L26 77 M40 84 L27 87 M80 80 L94 77 M80 84 L93 87" stroke-width="1.6"/>
+    <!-- forehead stripes and spots -->
+    <path d="M56 40 L56 48 M64 40 L64 48 M60 38 L60 50" stroke-width="2"/>
+    <circle cx="33" cy="70" r="1.6" fill="#33261a" stroke="none"/>
+    <circle cx="87" cy="70" r="1.6" fill="#33261a" stroke="none"/>
+    <circle cx="29" cy="64" r="1.4" fill="#33261a" stroke="none"/>
+    <circle cx="91" cy="64" r="1.4" fill="#33261a" stroke="none"/>
+  </g>
+</svg>

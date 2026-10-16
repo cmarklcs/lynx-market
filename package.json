@@ -1,0 +1,11 @@
+{
+  "name": "lynx-market",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A pretend online grocery store for a 7th grade nutrition-label science project.",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node tools/check-data.js"
+  },
+  "engines": { "node": ">=18" }
+}

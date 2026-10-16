@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Print Label Cards (Teacher) · Lynx Market</title>
+  <meta name="description" content="Lynx Market is a pretend grocery store for a 7th grade science project. All products and numbers are made up.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="img/lynx.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the label cards</a>
+  <header class="site-header">
+    <div class="awning" aria-hidden="true"></div>
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="img/lynx.svg" alt="" width="58" height="58">
+        <span class="logo-text">Lynx Market<span class="logo-sub">Your friendly neighborhood grocery</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html" data-nav="store">Store aisles</a></li>
+          <li><a href="logs.html" data-nav="logs">Meal logs</a></li>
+          <li><a href="mayas-week.html" data-nav="mayas-week">Maya's Week</a></li>
+          <li><a href="cart.html" data-nav="cart">Shopping cart</a></li>
+        </ul>
+      </nav>
+      <a class="cart-pill" id="cart-pill" href="cart.html">Pick a shopper</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+      <div class="no-print card-sheet-intro">
+      <h1>Print Label Cards</h1>
+      <p class="lede">For teachers: prints every product as a fold-over card, 4 cards per page. Cut along the solid lines, then fold on the dashed line so the package front and its Nutrition Facts label end up back to back.</p>
+      <p><button class="btn btn--primary" type="button" id="print-btn">Print label cards</button>
+      <span id="card-count"></span></p>
+      <p>Tip: in the print dialog, turn on “Background graphics” so the package colors print.</p>
+      </div>
+      <div id="cards"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Lynx Market is a pretend store for a 7th grade science project. Every brand, product, price and number here is made up.</p>
+    <p><a href="print-labels.html">Teacher: print label cards</a></p>
+  </footer>
+
+  <script src="js/art.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/print-labels.js"></script>
+</body>
+</html>
