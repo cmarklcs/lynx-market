@@ -57,7 +57,9 @@ Open it in any text editor (on GitHub, open the file and click the ✏️ pencil
 | `contains` | Allergen line under the label. Use `[]` for none. |
 | `art.style` | Package look: `natural` (leafy, earthy look), `bright`, `sporty`, `store` (plain Lynx Market brand), `fresh` (produce tag), `deli`, `treat`, `frosty`. |
 | `art.bg`, `bg2`, `ink`, `accent` | Package colors (background, pattern, text, badge). |
-| `art.icon` | Which drawing to use (see the list in `js/art.js`, such as `granola`, `banana`, `pizza`). |
+| `art.pack` | Package shape: `box`, `wideBox`, `bag` (chip bag), `pouch`, `breadBag`, `cup`, `tub`, `pint`, `bottle`, `carton`, `canister`, `can`, `jar`, `wrapper`, `tray` (deli tray), `bowl` (deli bowl), `clamshell` (clear box), `produceBag`, `loose` (no package). |
+| `art.liquid` | Optional: what shows through a bottle or jar, such as `"#ffad3b"` for orange juice. |
+| `art.icon` | Which food picture to print on the package (see the list in `js/art.js`, such as `granola`, `banana`, `pizza`). |
 | `art.seal` | Optional round badge text, such as `"Whole Grain"`. |
 | `teacherReview` | `true` on products a teacher should double-check (see below). |
 

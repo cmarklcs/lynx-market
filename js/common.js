@@ -34,20 +34,57 @@
   }
 
   /* ---------- Package front ---------- */
+  const PACK_NAMES = { box: "box", wideBox: "box", bag: "bag", pouch: "pouch", breadBag: "bag", cup: "cup", tub: "tub",
+    pint: "pint container", bottle: "bottle", carton: "carton", canister: "canister", can: "can", jar: "jar",
+    wrapper: "wrapper", tray: "deli tray", bowl: "deli bowl", clamshell: "clear container", produceBag: "bag", loose: "" };
+
+  // "NET WT 12.7 OZ (360g)" worked out from serving size × servings per container.
+  function netContents(p) {
+    const n = parseFloat(String(p.servingsPerContainer).replace(/[^0-9.]/g, "")) || 1;
+    const s = p.servingSize || "";
+    const floz = s.match(/([\d.]+)\s*fl oz/i), ml = s.match(/([\d.]+)\s*mL\)/i), gr = s.match(/([\d.]+)g\)/);
+    const r1 = v => String(Math.round(v * 10) / 10);
+    if (floz) { const t = +floz[1] * n; return `${r1(t)} FL OZ (${Math.round(t * 29.57)}mL)`; }
+    if (ml) { const t = +ml[1] * n; return `${r1(t / 29.57)} FL OZ (${Math.round(t)}mL)`; }
+    if (gr) { const t = +gr[1] * n; return `NET WT ${r1(t / 28.35)} OZ (${Math.round(t)}g)`; }
+    return "";
+  }
+
   function packageFront(p) {
     const a = p.art || {};
     const style = a.style || "store";
+    const key = LynxArt.PACKS[a.pack] ? a.pack : "box";
+    const pack = LynxArt.PACKS[key];
     const vars = `--pk-bg:${a.bg || "#fbf6ea"};--pk-bg2:${a.bg2 || "#ddd"};--pk-ink:${a.ink || "#222"};--pk-accent:${a.accent || "#c8432b"}`;
-    const brandMark = (style === "store" || style === "fresh" || style === "deli")
-      ? `<img class="pkg-lynx" src="img/lynx.svg" alt="">` : "";
-    const alt = `Package art: ${LynxArt.iconAlt(a.icon)}.`;
-    return `<div class="pkg pkg--${esc(style)}" style="${vars}">
-      <div class="pkg-brand">${brandMark}<span>${esc(p.brand)}</span></div>
-      ${a.seal ? `<div class="pkg-seal" aria-hidden="true"><span>${esc(a.seal)}</span></div>` : ""}
-      <div class="pkg-art" role="img" aria-label="${esc(alt)}">${LynxArt.iconSVG(a.icon)}</div>
-      <div class="pkg-name">${esc(p.frontName || p.name)}</div>
-      ${p.claim ? `<div class="pkg-claim"><span>${esc(p.claim)}</span></div>` : ""}
-      ${a.note ? `<div class="pkg-note">${esc(a.note)}</div>` : ""}
+    const lynx = (style === "store" || style === "fresh" || style === "deli") ? `<img class="pkg-lynx" src="img/lynx.svg" alt="">` : "";
+    const brand = `<div class="pkg-brand">${lynx}<span>${esc(p.brand)}</span></div>`;
+    const name = `<div class="pkg-name">${esc(p.frontName || p.name)}</div>`;
+    const claim = p.claim ? `<div class="pkg-claim"><span>${esc(p.claim)}</span></div>` : "";
+    const note = a.note ? `<div class="pkg-note">${esc(a.note)}</div>` : "";
+    const net = key === "loose" ? "" : netContents(p);
+    const netEl = net ? `<div class="pkg-net">${esc(net)}</div>` : "";
+    const seal = a.seal ? `<div class="pkg-seal" aria-hidden="true"><span>${esc(a.seal)}</span></div>` : "";
+    const over = typeof pack.over === "function" ? pack.over(p) : pack.over;
+    const what = PACK_NAMES[key] ? `${p.brand} ${PACK_NAMES[key]}` : p.name;
+    const alt = `${what}. Picture: ${LynxArt.iconAlt(a.icon)}.`;
+    const svg = (cls, body, label) => `<svg class="${cls}" viewBox="0 0 ${pack.w} ${pack.h}" preserveAspectRatio="none"
+      ${label ? `role="img" aria-label="${esc(label)}"` : `aria-hidden="true"`} focusable="false">${body}</svg>`;
+
+    let text;
+    if (pack.mode === "sticker") {
+      text = `<div class="pk-sticker">${brand}${name}${claim}${netEl}</div>`;
+    } else {
+      const [t, r, b, l] = pack.face;
+      const img = pack.mode === "full" ? `<div class="pkg-art">${LynxArt.iconSVG(a.icon)}</div>` : "";
+      text = `<div class="pk-face" style="top:${t}%;right:${r}%;bottom:${b}%;left:${l}%">
+        ${seal}${brand}${name}${pack.row ? `<div class="pk-col">${claim}</div>` : ""}${img}${pack.row ? "" : claim}${note}${netEl}</div>`;
+    }
+    return `<div class="pkg">
+      <div class="pk pk--${key} st--${esc(style)}" style="${vars};--ar:${pack.w}/${pack.h}">
+        ${svg("pk-shape", pack.under(p), alt)}
+        ${text}
+        ${over ? svg("pk-over", over) : ""}
+      </div>
     </div>`;
   }
 

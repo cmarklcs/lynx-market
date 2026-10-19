@@ -21,7 +21,7 @@
       "calories": 150, "totalFatG": 5, "satFatG": 1.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 90,
       "carbsG": 24, "fiberG": 2, "totalSugarsG": 10, "addedSugarsG": 9, "proteinG": 3,
       "contains": ["wheat", "milk"],
-      "art": { "style": "natural", "bg": "#efe1c2", "bg2": "#d9c497", "ink": "#3d5a1e", "accent": "#5e8c31", "icon": "granola", "seal": "Ancient Grains" }
+      "art": { "pack": "pouch", "style": "natural", "bg": "#efe1c2", "bg2": "#d9c497", "ink": "#3d5a1e", "accent": "#5e8c31", "icon": "granola", "seal": "Ancient Grains" }
     },
     {
       "id": "berry-yogurt",
@@ -36,7 +36,7 @@
       "calories": 180, "totalFatG": 2.5, "satFatG": 1.5, "transFatG": 0, "cholesterolMg": 10, "sodiumMg": 105,
       "carbsG": 32, "fiberG": 0, "totalSugarsG": 26, "addedSugarsG": 19, "proteinG": 7,
       "contains": ["milk"],
-      "art": { "style": "natural", "bg": "#f6eef2", "bg2": "#e7c9d6", "ink": "#4a2a5a", "accent": "#6b8f3a", "icon": "yogurtBerry", "seal": "Real Fruit" }
+      "art": { "pack": "cup", "style": "natural", "bg": "#f6eef2", "bg2": "#e7c9d6", "ink": "#4a2a5a", "accent": "#6b8f3a", "icon": "berryMix", "seal": "Real Fruit" }
     },
     {
       "id": "juice-drink",
@@ -51,7 +51,7 @@
       "calories": 120, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 20,
       "carbsG": 31, "fiberG": 0, "totalSugarsG": 30, "addedSugarsG": 26, "proteinG": 0,
       "contains": [],
-      "art": { "style": "natural", "bg": "#fff1c9", "bg2": "#ffd27a", "ink": "#2f5d1e", "accent": "#e2711d", "icon": "tropical", "seal": "Real Fruit", "note": "25% juice" }
+      "art": { "pack": "bottle", "liquid": "#ffad3b", "style": "natural", "bg": "#fff1c9", "bg2": "#ffd27a", "ink": "#2f5d1e", "accent": "#e2711d", "icon": "tropicalFruit", "seal": "Real Fruit", "note": "25% juice" }
     },
     {
       "id": "veggie-crisps",
@@ -66,7 +66,7 @@
       "calories": 140, "totalFatG": 7, "satFatG": 1, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 240,
       "carbsG": 18, "fiberG": 0, "totalSugarsG": 2, "addedSugarsG": 1, "proteinG": 1,
       "contains": [],
-      "art": { "style": "natural", "bg": "#e3efd2", "bg2": "#bcd89a", "ink": "#2d4f1a", "accent": "#d9572b", "icon": "veggieStraws", "seal": "Garden Grown" }
+      "art": { "pack": "bag", "style": "natural", "bg": "#e3efd2", "bg2": "#bcd89a", "ink": "#2d4f1a", "accent": "#d9572b", "icon": "veggieStraws", "seal": "Garden Grown" }
     },
     {
       "id": "ranch",
@@ -81,7 +81,7 @@
       "calories": 130, "totalFatG": 13, "satFatG": 2.5, "transFatG": 0, "cholesterolMg": 10, "sodiumMg": 270,
       "carbsG": 3, "fiberG": 0, "totalSugarsG": 2, "addedSugarsG": 2, "proteinG": 0,
       "contains": ["milk", "egg"],
-      "art": { "style": "natural", "bg": "#eef6e8", "bg2": "#c9e2b8", "ink": "#25502b", "accent": "#4f9a45", "icon": "dressing", "seal": "Fresh Herbs" }
+      "art": { "pack": "bottle", "liquid": "#f6f2e6", "style": "natural", "bg": "#eef6e8", "bg2": "#c9e2b8", "ink": "#25502b", "accent": "#4f9a45", "icon": "saladDrizzle", "seal": "Fresh Herbs" }
     },
     {
       "id": "protein-bar",
@@ -96,7 +96,7 @@
       "calories": 230, "totalFatG": 8, "satFatG": 4, "transFatG": 0, "cholesterolMg": 5, "sodiumMg": 190,
       "carbsG": 30, "fiberG": 3, "totalSugarsG": 20, "addedSugarsG": 18, "proteinG": 10,
       "contains": ["milk", "soy", "peanuts"],
-      "art": { "style": "natural", "bg": "#e4ecd9", "bg2": "#9fbf7f", "ink": "#1f3d2a", "accent": "#c1691f", "icon": "mountainBar", "seal": "10g Protein" }
+      "art": { "pack": "wrapper", "style": "natural", "bg": "#e4ecd9", "bg2": "#9fbf7f", "ink": "#1f3d2a", "accent": "#c1691f", "icon": "barChunk", "seal": "10g Protein" }
     },
     {
       "id": "veggie-pizza",
@@ -111,7 +111,7 @@
       "calories": 290, "totalFatG": 11, "satFatG": 5, "transFatG": 0, "cholesterolMg": 25, "sodiumMg": 620,
       "carbsG": 36, "fiberG": 2, "totalSugarsG": 5, "addedSugarsG": 4, "proteinG": 12,
       "contains": ["wheat", "milk"],
-      "art": { "style": "natural", "bg": "#f3ead6", "bg2": "#c7d8a8", "ink": "#3a4f1c", "accent": "#b5452a", "icon": "pizza", "seal": "Whole Grain" }
+      "art": { "pack": "wideBox", "style": "natural", "bg": "#f3ead6", "bg2": "#c7d8a8", "ink": "#3a4f1c", "accent": "#b5452a", "icon": "pizzaTop", "seal": "Whole Grain" }
     },
 
     {
@@ -127,7 +127,7 @@
       "calories": 150, "totalFatG": 3, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 27, "fiberG": 4, "totalSugarsG": 1, "addedSugarsG": 0, "proteinG": 5,
       "contains": [],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "oats" }
+      "art": { "pack": "canister", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "oats" }
     },
     {
       "id": "banana",
@@ -142,7 +142,7 @@
       "calories": 95, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 24, "fiberG": 4, "totalSugarsG": 14, "addedSugarsG": 0, "proteinG": 0,
       "contains": [],
-      "art": { "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "banana" }
+      "art": { "pack": "loose", "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "banana" }
     },
     {
       "id": "greek-yogurt",
@@ -157,7 +157,7 @@
       "calories": 100, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 10, "sodiumMg": 65,
       "carbsG": 7, "fiberG": 0, "totalSugarsG": 6, "addedSugarsG": 0, "proteinG": 17,
       "contains": ["milk"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "yogurtTub" }
+      "art": { "pack": "tub", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "yogurtBowl" }
     },
     {
       "id": "turkey-wrap",
@@ -172,7 +172,7 @@
       "calories": 350, "totalFatG": 9, "satFatG": 2.5, "transFatG": 0, "cholesterolMg": 45, "sodiumMg": 780,
       "carbsG": 43, "fiberG": 6, "totalSugarsG": 5, "addedSugarsG": 3, "proteinG": 24,
       "contains": ["wheat", "milk"],
-      "art": { "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "wrap" }
+      "art": { "pack": "clamshell", "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "wrap" }
     },
     {
       "id": "baby-carrots",
@@ -187,7 +187,7 @@
       "calories": 50, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 110,
       "carbsG": 12, "fiberG": 3, "totalSugarsG": 6, "addedSugarsG": 0, "proteinG": 1,
       "contains": [],
-      "art": { "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "carrots" }
+      "art": { "pack": "produceBag", "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "carrots" }
     },
     {
       "id": "hummus",
@@ -202,7 +202,7 @@
       "calories": 70, "totalFatG": 5, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 130,
       "carbsG": 4, "fiberG": 2, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 2,
       "contains": ["sesame"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "hummus" }
+      "art": { "pack": "tub", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "hummus" }
     },
     {
       "id": "blueberries",
@@ -217,7 +217,7 @@
       "calories": 85, "totalFatG": 0.5, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 21, "fiberG": 4, "totalSugarsG": 15, "addedSugarsG": 0, "proteinG": 1,
       "contains": [],
-      "art": { "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "blueberries" }
+      "art": { "pack": "clamshell", "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "blueberries" }
     },
     {
       "id": "peanut-butter",
@@ -232,7 +232,7 @@
       "calories": 190, "totalFatG": 16, "satFatG": 2.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 7, "fiberG": 3, "totalSugarsG": 2, "addedSugarsG": 0, "proteinG": 8,
       "contains": ["peanuts"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "peanutJar" }
+      "art": { "pack": "jar", "liquid": "#b8793c", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "peanuts" }
     },
     {
       "id": "grilled-chicken",
@@ -247,7 +247,7 @@
       "calories": 190, "totalFatG": 5, "satFatG": 1, "transFatG": 0, "cholesterolMg": 95, "sodiumMg": 80,
       "carbsG": 0, "fiberG": 0, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 35,
       "contains": [],
-      "art": { "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "chicken" }
+      "art": { "pack": "tray", "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "chicken" }
     },
     {
       "id": "brown-rice",
@@ -262,7 +262,7 @@
       "calories": 220, "totalFatG": 2, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 10,
       "carbsG": 45, "fiberG": 4, "totalSugarsG": 1, "addedSugarsG": 0, "proteinG": 5,
       "contains": [],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "rice" }
+      "art": { "pack": "box", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "rice" }
     },
     {
       "id": "broccoli",
@@ -277,7 +277,7 @@
       "calories": 30, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 30,
       "carbsG": 6, "fiberG": 2, "totalSugarsG": 2, "addedSugarsG": 0, "proteinG": 3,
       "contains": [],
-      "art": { "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "broccoli" }
+      "art": { "pack": "clamshell", "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "broccoli" }
     },
 
     {
@@ -294,7 +294,7 @@
       "calories": 290, "totalFatG": 2, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 480,
       "carbsG": 56, "fiberG": 3, "totalSugarsG": 7, "addedSugarsG": 6, "proteinG": 11,
       "contains": ["wheat"],
-      "art": { "style": "natural", "bg": "#f1e3c4", "bg2": "#cfae73", "ink": "#4b3417", "accent": "#6b8f3a", "icon": "bagel", "seal": "7 Grains" }
+      "art": { "pack": "breadBag", "style": "natural", "bg": "#f1e3c4", "bg2": "#cfae73", "ink": "#4b3417", "accent": "#6b8f3a", "icon": "bagel", "seal": "7 Grains" }
     },
     {
       "id": "cocoa-comets",
@@ -310,7 +310,7 @@
       "calories": 150, "totalFatG": 1.5, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 170,
       "carbsG": 32, "fiberG": 2, "totalSugarsG": 13, "addedSugarsG": 13, "proteinG": 2,
       "contains": ["wheat", "soy"],
-      "art": { "style": "bright", "bg": "#2c2a6b", "bg2": "#4b46b0", "ink": "#ffffff", "accent": "#ffcc33", "icon": "comet" }
+      "art": { "pack": "box", "style": "bright", "bg": "#2c2a6b", "bg2": "#4b46b0", "ink": "#ffffff", "accent": "#ffcc33", "icon": "cerealBowl" }
     },
     {
       "id": "maple-oatmeal",
@@ -326,7 +326,7 @@
       "calories": 160, "totalFatG": 2, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 260,
       "carbsG": 32, "fiberG": 3, "totalSugarsG": 12, "addedSugarsG": 12, "proteinG": 4,
       "contains": [],
-      "art": { "style": "natural", "bg": "#f6e4c4", "bg2": "#dca866", "ink": "#5a2f12", "accent": "#b3471d", "icon": "mapleBowl", "seal": "Whole Grain" }
+      "art": { "pack": "box", "style": "natural", "bg": "#f6e4c4", "bg2": "#dca866", "ink": "#5a2f12", "accent": "#b3471d", "icon": "mapleBowl", "seal": "Whole Grain" }
     },
     {
       "id": "boiled-eggs",
@@ -342,7 +342,7 @@
       "calories": 140, "totalFatG": 10, "satFatG": 3, "transFatG": 0, "cholesterolMg": 370, "sodiumMg": 140,
       "carbsG": 1, "fiberG": 0, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 12,
       "contains": ["egg"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "eggs" }
+      "art": { "pack": "clamshell", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "eggs" }
     },
     {
       "id": "lowfat-milk",
@@ -358,7 +358,7 @@
       "calories": 110, "totalFatG": 2.5, "satFatG": 1.5, "transFatG": 0, "cholesterolMg": 15, "sodiumMg": 125,
       "carbsG": 12, "fiberG": 0, "totalSugarsG": 12, "addedSugarsG": 0, "proteinG": 8,
       "contains": ["milk"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "milk" }
+      "art": { "pack": "carton", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "milkGlass" }
     },
     {
       "id": "chocolate-milk",
@@ -374,7 +374,7 @@
       "calories": 190, "totalFatG": 4.5, "satFatG": 2.5, "transFatG": 0, "cholesterolMg": 20, "sodiumMg": 200,
       "carbsG": 28, "fiberG": 1, "totalSugarsG": 24, "addedSugarsG": 12, "proteinG": 8,
       "contains": ["milk"],
-      "art": { "style": "bright", "bg": "#7a4a2b", "bg2": "#9a6440", "ink": "#ffffff", "accent": "#f2c14e", "icon": "chocMilk" }
+      "art": { "pack": "bottle", "liquid": "#7a4a2b", "style": "bright", "bg": "#7a4a2b", "bg2": "#9a6440", "ink": "#ffffff", "accent": "#f2c14e", "icon": "chocGlass" }
     },
     {
       "id": "string-cheese",
@@ -390,7 +390,7 @@
       "calories": 80, "totalFatG": 6, "satFatG": 3, "transFatG": 0, "cholesterolMg": 15, "sodiumMg": 200,
       "carbsG": 1, "fiberG": 0, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 7,
       "contains": ["milk"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "cheeseStick" }
+      "art": { "pack": "pouch", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "cheeseStick" }
     },
     {
       "id": "veggie-smoothie",
@@ -406,7 +406,7 @@
       "calories": 140, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 40,
       "carbsG": 34, "fiberG": 1, "totalSugarsG": 29, "addedSugarsG": 8, "proteinG": 1,
       "contains": [],
-      "art": { "style": "natural", "bg": "#dff0d0", "bg2": "#8cc56a", "ink": "#1d4a22", "accent": "#3f8f3a", "icon": "smoothie", "seal": "Plant Powered" }
+      "art": { "pack": "bottle", "liquid": "#78ad44", "style": "natural", "bg": "#dff0d0", "bg2": "#8cc56a", "ink": "#1d4a22", "accent": "#3f8f3a", "icon": "greenGlass", "seal": "Plant Powered" }
     },
     {
       "id": "sport-drink",
@@ -422,7 +422,7 @@
       "calories": 140, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 270,
       "carbsG": 36, "fiberG": 0, "totalSugarsG": 34, "addedSugarsG": 34, "proteinG": 0,
       "contains": [],
-      "art": { "style": "sporty", "bg": "#0f3f8c", "bg2": "#1c63d1", "ink": "#ffffff", "accent": "#7ef0ff", "icon": "sportDrop" }
+      "art": { "pack": "bottle", "liquid": "#2d93e6", "style": "sporty", "bg": "#0f3f8c", "bg2": "#1c63d1", "ink": "#ffffff", "accent": "#7ef0ff", "icon": "sportDrop" }
     },
     {
       "id": "sparkling-water",
@@ -438,7 +438,7 @@
       "calories": 0, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 0, "fiberG": 0, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 0,
       "contains": [],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "bubbles" }
+      "art": { "pack": "can", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "limeSoda" }
     },
     {
       "id": "orange-juice",
@@ -454,7 +454,7 @@
       "calories": 110, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 26, "fiberG": 0, "totalSugarsG": 22, "addedSugarsG": 0, "proteinG": 2,
       "contains": [],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "orange" }
+      "art": { "pack": "carton", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "orange" }
     },
     {
       "id": "fruit-snacks",
@@ -470,7 +470,7 @@
       "calories": 80, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 15,
       "carbsG": 19, "fiberG": 0, "totalSugarsG": 11, "addedSugarsG": 11, "proteinG": 1,
       "contains": [],
-      "art": { "style": "natural", "bg": "#ffe9e4", "bg2": "#ffb3a3", "ink": "#7a1f2b", "accent": "#4f9a45", "icon": "gummies", "seal": "Real Fruit Juice" }
+      "art": { "pack": "box", "style": "natural", "bg": "#ffe9e4", "bg2": "#ffb3a3", "ink": "#7a1f2b", "accent": "#4f9a45", "icon": "gummies", "seal": "Real Fruit Juice" }
     },
     {
       "id": "cheddar-puffs",
@@ -486,7 +486,7 @@
       "calories": 150, "totalFatG": 9, "satFatG": 2, "transFatG": 0, "cholesterolMg": 5, "sodiumMg": 290,
       "carbsG": 16, "fiberG": 0, "totalSugarsG": 1, "addedSugarsG": 1, "proteinG": 2,
       "contains": ["milk"],
-      "art": { "style": "bright", "bg": "#ffb627", "bg2": "#ffd166", "ink": "#5a2a00", "accent": "#e85d04", "icon": "puffs" }
+      "art": { "pack": "bag", "style": "bright", "bg": "#ffb627", "bg2": "#ffd166", "ink": "#5a2a00", "accent": "#e85d04", "icon": "puffs" }
     },
     {
       "id": "almonds",
@@ -502,7 +502,7 @@
       "calories": 170, "totalFatG": 15, "satFatG": 1, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 55,
       "carbsG": 6, "fiberG": 3, "totalSugarsG": 1, "addedSugarsG": 0, "proteinG": 6,
       "contains": ["tree nuts (almonds)"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "almonds" }
+      "art": { "pack": "pouch", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "almonds" }
     },
     {
       "id": "trail-mix",
@@ -518,7 +518,7 @@
       "calories": 170, "totalFatG": 10, "satFatG": 3, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 60,
       "carbsG": 17, "fiberG": 2, "totalSugarsG": 11, "addedSugarsG": 7, "proteinG": 4,
       "contains": ["peanuts", "milk", "soy"],
-      "art": { "style": "natural", "bg": "#e8e0c8", "bg2": "#a8b98a", "ink": "#3b3a1c", "accent": "#a0522d", "icon": "trailMix", "seal": "Natural Energy" }
+      "art": { "pack": "pouch", "style": "natural", "bg": "#e8e0c8", "bg2": "#a8b98a", "ink": "#3b3a1c", "accent": "#a0522d", "icon": "trailMix", "seal": "Natural Energy" }
     },
     {
       "id": "sunbutter-crackers",
@@ -534,7 +534,7 @@
       "calories": 190, "totalFatG": 9, "satFatG": 2, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 230,
       "carbsG": 23, "fiberG": 2, "totalSugarsG": 6, "addedSugarsG": 5, "proteinG": 5,
       "contains": ["wheat", "made in a peanut-free facility"],
-      "art": { "style": "bright", "bg": "#fff3b0", "bg2": "#ffd23f", "ink": "#5b3a00", "accent": "#e07a1f", "icon": "crackers" }
+      "art": { "pack": "box", "style": "bright", "bg": "#fff3b0", "bg2": "#ffd23f", "ink": "#5b3a00", "accent": "#e07a1f", "icon": "crackers" }
     },
     {
       "id": "chickpea-crunch",
@@ -550,7 +550,7 @@
       "calories": 120, "totalFatG": 3, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 210,
       "carbsG": 17, "fiberG": 5, "totalSugarsG": 2, "addedSugarsG": 2, "proteinG": 6,
       "contains": [],
-      "art": { "style": "bright", "bg": "#d7263d", "bg2": "#f46036", "ink": "#ffffff", "accent": "#c5d86d", "icon": "chickpeas" }
+      "art": { "pack": "pouch", "style": "bright", "bg": "#d7263d", "bg2": "#f46036", "ink": "#ffffff", "accent": "#c5d86d", "icon": "chickpeas" }
     },
     {
       "id": "choc-chip-cookies",
@@ -566,7 +566,7 @@
       "calories": 160, "totalFatG": 7, "satFatG": 3.5, "transFatG": 0, "cholesterolMg": 10, "sodiumMg": 105,
       "carbsG": 23, "fiberG": 1, "totalSugarsG": 12, "addedSugarsG": 11, "proteinG": 2,
       "contains": ["wheat", "milk", "egg", "soy"],
-      "art": { "style": "treat", "bg": "#5b3416", "bg2": "#8a5a2b", "ink": "#fff4e0", "accent": "#e8b04a", "icon": "cookie" }
+      "art": { "pack": "bag", "style": "treat", "bg": "#5b3416", "bg2": "#8a5a2b", "ink": "#fff4e0", "accent": "#e8b04a", "icon": "cookie" }
     },
     {
       "id": "dark-chocolate",
@@ -582,7 +582,7 @@
       "calories": 110, "totalFatG": 8, "satFatG": 4.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 9, "fiberG": 2, "totalSugarsG": 5, "addedSugarsG": 5, "proteinG": 2,
       "contains": ["milk", "soy"],
-      "art": { "style": "treat", "bg": "#241b2f", "bg2": "#3d2e52", "ink": "#f5e9d0", "accent": "#d4a64a", "icon": "chocolate" }
+      "art": { "pack": "wrapper", "style": "treat", "bg": "#241b2f", "bg2": "#3d2e52", "ink": "#f5e9d0", "accent": "#d4a64a", "icon": "chocolate" }
     },
     {
       "id": "burrito-bowl",
@@ -598,7 +598,7 @@
       "calories": 450, "totalFatG": 12, "satFatG": 3, "transFatG": 0, "cholesterolMg": 10, "sodiumMg": 820,
       "carbsG": 68, "fiberG": 12, "totalSugarsG": 4, "addedSugarsG": 2, "proteinG": 17,
       "contains": ["milk"],
-      "art": { "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "burritoBowl" }
+      "art": { "pack": "bowl", "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "topBurrito" }
     },
     {
       "id": "tofu-stir-fry",
@@ -614,7 +614,7 @@
       "calories": 380, "totalFatG": 14, "satFatG": 1.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 890,
       "carbsG": 46, "fiberG": 5, "totalSugarsG": 16, "addedSugarsG": 14, "proteinG": 18,
       "contains": ["soy", "wheat", "sesame"],
-      "art": { "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "tofu" }
+      "art": { "pack": "bowl", "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "topStirfry" }
     },
     {
       "id": "salmon",
@@ -630,7 +630,7 @@
       "calories": 230, "totalFatG": 14, "satFatG": 2.5, "transFatG": 0, "cholesterolMg": 70, "sodiumMg": 75,
       "carbsG": 0, "fiberG": 0, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 25,
       "contains": ["fish (salmon)"],
-      "art": { "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "fish" }
+      "art": { "pack": "tray", "style": "deli", "bg": "#fffaf0", "bg2": "#c8432b", "ink": "#3a2a20", "accent": "#c8432b", "icon": "fish" }
     },
     {
       "id": "apple",
@@ -646,7 +646,7 @@
       "calories": 95, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 25, "fiberG": 4, "totalSugarsG": 19, "addedSugarsG": 0, "proteinG": 0,
       "contains": [],
-      "art": { "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "apple" }
+      "art": { "pack": "loose", "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "apple" }
     },
     {
       "id": "spring-mix",
@@ -662,7 +662,7 @@
       "calories": 20, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 80,
       "carbsG": 3, "fiberG": 2, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 2,
       "contains": [],
-      "art": { "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "greens" }
+      "art": { "pack": "clamshell", "style": "fresh", "bg": "#e9d3a8", "bg2": "#c9a874", "ink": "#4a3518", "accent": "#2f6f3e", "icon": "greens" }
     },
     {
       "id": "black-beans",
@@ -678,7 +678,7 @@
       "calories": 110, "totalFatG": 0.5, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 140,
       "carbsG": 19, "fiberG": 7, "totalSugarsG": 1, "addedSugarsG": 0, "proteinG": 7,
       "contains": [],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "beans" }
+      "art": { "pack": "can", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "beanBowl" }
     },
     {
       "id": "wheat-bread",
@@ -694,7 +694,7 @@
       "calories": 90, "totalFatG": 1.5, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 150,
       "carbsG": 16, "fiberG": 3, "totalSugarsG": 3, "addedSugarsG": 2, "proteinG": 5,
       "contains": ["wheat"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "bread" }
+      "art": { "pack": "breadBag", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "bread" }
     },
     {
       "id": "chicken-nuggets",
@@ -710,7 +710,7 @@
       "calories": 230, "totalFatG": 14, "satFatG": 2.5, "transFatG": 0, "cholesterolMg": 30, "sodiumMg": 470,
       "carbsG": 14, "fiberG": 1, "totalSugarsG": 0, "addedSugarsG": 0, "proteinG": 12,
       "contains": ["wheat"],
-      "art": { "style": "bright", "bg": "#e63946", "bg2": "#ff7b54", "ink": "#ffffff", "accent": "#ffd23f", "icon": "nuggets" }
+      "art": { "pack": "bag", "style": "bright", "bg": "#e63946", "bg2": "#ff7b54", "ink": "#ffffff", "accent": "#ffd23f", "icon": "nuggets" }
     },
     {
       "id": "veggie-burger",
@@ -726,7 +726,7 @@
       "calories": 130, "totalFatG": 4, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 380,
       "carbsG": 15, "fiberG": 5, "totalSugarsG": 1, "addedSugarsG": 0, "proteinG": 9,
       "contains": ["soy", "wheat"],
-      "art": { "style": "natural", "bg": "#e3efd2", "bg2": "#9fc47d", "ink": "#2d4f1a", "accent": "#7a3e1d", "icon": "veggieBurger", "seal": "Plant Powered" }
+      "art": { "pack": "box", "style": "natural", "bg": "#e3efd2", "bg2": "#9fc47d", "ink": "#2d4f1a", "accent": "#7a3e1d", "icon": "veggieBurger", "seal": "Plant Powered" }
     },
     {
       "id": "edamame",
@@ -742,7 +742,7 @@
       "calories": 100, "totalFatG": 4, "satFatG": 0.5, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 5,
       "carbsG": 8, "fiberG": 4, "totalSugarsG": 2, "addedSugarsG": 0, "proteinG": 9,
       "contains": ["soy"],
-      "art": { "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "edamame" }
+      "art": { "pack": "bag", "style": "store", "bg": "#fbf6ea", "bg2": "#1f3a5f", "ink": "#1f3a5f", "accent": "#c8432b", "icon": "edamame" }
     },
     {
       "id": "fruit-bar",
@@ -758,7 +758,7 @@
       "calories": 70, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 0, "sodiumMg": 0,
       "carbsG": 18, "fiberG": 1, "totalSugarsG": 15, "addedSugarsG": 9, "proteinG": 0,
       "contains": [],
-      "art": { "style": "frosty", "bg": "#e3f4fb", "bg2": "#b9e2f2", "ink": "#7a1f2b", "accent": "#e63950", "icon": "popsicle" }
+      "art": { "pack": "box", "style": "frosty", "bg": "#e3f4fb", "bg2": "#b9e2f2", "ink": "#7a1f2b", "accent": "#e63950", "icon": "popsicle" }
     },
     {
       "id": "brownie-ice-cream",
@@ -774,7 +774,7 @@
       "calories": 330, "totalFatG": 18, "satFatG": 11, "transFatG": 0, "cholesterolMg": 60, "sodiumMg": 85,
       "carbsG": 38, "fiberG": 1, "totalSugarsG": 30, "addedSugarsG": 26, "proteinG": 5,
       "contains": ["milk", "egg", "wheat", "soy"],
-      "art": { "style": "treat", "bg": "#3e2210", "bg2": "#6b3a1c", "ink": "#ffe9d6", "accent": "#ff8fab", "icon": "iceCream" }
+      "art": { "pack": "pint", "style": "treat", "bg": "#3e2210", "bg2": "#6b3a1c", "ink": "#ffe9d6", "accent": "#ff8fab", "icon": "iceCream" }
     },
     {
       "id": "froyo",
@@ -790,7 +790,7 @@
       "calories": 160, "totalFatG": 0, "satFatG": 0, "transFatG": 0, "cholesterolMg": 5, "sodiumMg": 75,
       "carbsG": 36, "fiberG": 0, "totalSugarsG": 30, "addedSugarsG": 22, "proteinG": 4,
       "contains": ["milk"],
-      "art": { "style": "frosty", "bg": "#eef7f2", "bg2": "#c5e8d5", "ink": "#24543d", "accent": "#4f9a6a", "icon": "froyo", "seal": "0g Fat" }
+      "art": { "pack": "pint", "style": "frosty", "bg": "#eef7f2", "bg2": "#c5e8d5", "ink": "#24543d", "accent": "#4f9a6a", "icon": "froyo", "seal": "0g Fat" }
     }
   ],
 

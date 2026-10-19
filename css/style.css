@@ -164,136 +164,105 @@ h2 { font-family: var(--font-head); font-weight: 700; color: var(--lz-blue); }
 .card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .card-actions .btn { flex: 1 1 auto; justify-content: center; }
 
-/* ---------- Package fronts ---------- */
+/* ---------- Package fronts ----------
+   .pkg = the store shelf behind the product.  .pk = the package itself (drawn in js/art.js).
+   Text sizes use cqw (percent of the package width) so packages look the same at any size. */
 .pkg {
-  position: relative; height: 100%; display: flex; flex-direction: column; align-items: center;
-  padding: 16px 16px 18px; text-align: center; color: var(--pk-ink); background: var(--pk-bg);
-  font-size: 16px; font-family: var(--pk-font); line-height: 1.5;
+  position: relative; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  padding: 14px 10px 30px; font-family: var(--pk-font); line-height: 1.15; color: #222;
+  background:
+    linear-gradient(to top, #8c7a5e 0 8px, #b8a585 8px 22px, #d9ccb2 22px 24px, transparent 24px),
+    linear-gradient(#fbfaf7, #ecebe6);
 }
-.pkg-brand { font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: .8em; display: flex; align-items: center; gap: 6px; }
-.pkg-lynx { width: 26px; height: 26px; }
-.pkg-art { width: 100%; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 6px 0; }
-.pkg-art svg { width: 92%; height: 100%; max-height: 190px; overflow: visible; }
-.pkg-art .ol { stroke: #33261a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-.pkg-art .ac { fill: var(--pk-accent); }
-.pkg-art .ac-stroke { stroke: var(--pk-accent); }
-.pkg-name { font-size: 1.45em; font-weight: 900; line-height: 1.1; margin: 4px 0 8px; }
-.pkg-claim span { display: inline-block; }
-.pkg-claim { font-weight: 800; font-size: .95em; line-height: 1.2; }
-.pkg-note { margin-top: 6px; font-size: .62em; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; opacity: .85; }
+.pk {
+  position: relative; container-type: inline-size; aspect-ratio: var(--ar); width: 88%; max-width: 100%; max-height: 100%;
+  filter: drop-shadow(0 6px 5px rgba(0, 0, 0, .22));
+}
+.pk--wrapper { width: 96%; }
+.pk--tray, .pk--bowl, .pk--clamshell, .pk--loose { width: 96%; margin-bottom: 6%; }
+.pk--tub, .pk--cup { width: 94%; }
+.pk--bottle, .pk--jar, .pk--can { width: 80%; }
+.pk-shape, .pk-over { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pk-over { pointer-events: none; }
+.pk-face {
+  position: absolute; display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 1.5cqw; padding: 2.5cqw 3cqw; color: var(--pk-ink); overflow: hidden;
+}
+.pkg-brand { font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: 12px; font-size: 6cqw; display: flex; align-items: center; justify-content: center; gap: 1.5cqw; }
+.pkg-lynx { width: 9cqw; height: 9cqw; min-width: 16px; min-height: 16px; background: #fff; border-radius: 50%; }
+.pkg-name { font-weight: 900; font-size: 18px; font-size: 10cqw; line-height: 1.05; }
+.pkg-art { flex: 1 1 auto; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: center; }
+.pkg-art svg { width: 100%; height: 100%; }
+.pkg-claim { font-weight: 800; font-size: 11px; font-size: 5.6cqw; line-height: 1.15; }
+.pkg-claim span { display: inline-block; padding: 1.2cqw 3.5cqw; border-radius: 2cqw; background: var(--pk-accent); color: #fff; }
+.pkg-note { font-size: 8px; font-size: 3.8cqw; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; opacity: .9; }
+.pkg-net { margin-top: auto; font-size: 8px; font-size: 3.9cqw; font-weight: 700; letter-spacing: .04em; opacity: .85; }
 .pkg-seal {
-  position: absolute; top: 40px; right: 12px; width: 70px; height: 70px; border-radius: 50%;
+  position: absolute; top: 42%; right: 3cqw; width: 20cqw; height: 20cqw; border-radius: 50%; z-index: 2;
   display: flex; align-items: center; justify-content: center; text-align: center;
-  font-size: .62em; font-weight: 900; line-height: 1.05; text-transform: uppercase; letter-spacing: .5px;
-  background: var(--pk-accent); color: #fff; transform: rotate(12deg);
-  border: 3px dashed rgba(255, 255, 255, .8); outline: 3px solid var(--pk-accent); z-index: 2;
+  font-size: 3.4cqw; font-weight: 900; line-height: 1.05; text-transform: uppercase;
+  background: var(--pk-accent); color: #fff; border: .8cqw solid #fff; box-shadow: 0 0 0 .6cqw var(--pk-accent);
 }
-.pkg-seal span { padding: 0 6px; }
+.pkg-seal span { padding: 0 1.5cqw; }
 
-/* natural / "health halo" look */
-.pkg--natural {
-  background:
-    radial-gradient(circle at 100% 0, var(--pk-bg2) 0 70px, transparent 71px),
-    radial-gradient(circle at 0 100%, var(--pk-bg2) 0 90px, transparent 91px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M10 40 C12 28 24 22 34 24 C32 34 22 42 10 40 Z' fill='%23557a2b' fill-opacity='.08'/%3E%3C/svg%3E"),
-    var(--pk-bg);
-  border: 6px double color-mix(in srgb, var(--pk-ink) 45%, transparent);
-}
-.pkg--natural .pkg-brand { font-family: var(--font-natural); font-style: italic; text-transform: none; letter-spacing: .5px; font-size: 1.05em; }
-.pkg--natural .pkg-name { font-family: var(--font-natural); font-weight: 700; }
-.pkg--natural .pkg-claim span {
-  background: var(--pk-accent); color: #fff; padding: 6px 14px 6px 30px; border-radius: 999px 6px 999px 6px; position: relative;
-}
-.pkg--natural .pkg-claim span::before {
-  content: ""; position: absolute; left: 9px; top: 50%; width: 14px; height: 14px; margin-top: -7px;
-  background: #fff; border-radius: 0 100% 0 100%;
-}
+/* smaller printed areas */
+.pk--bottle .pk-face, .pk--jar .pk-face { gap: 1cqw; }
+.pk--bottle .pkg-name, .pk--jar .pkg-name, .pk--can .pkg-name { font-size: 9cqw; }
+.pk--bottle .pkg-seal, .pk--jar .pkg-seal { top: 40%; width: 17cqw; height: 17cqw; font-size: 2.9cqw; }
+.pk--tub .pkg-name, .pk--cup .pkg-name { font-size: 8.5cqw; }
+.pk--tub .pkg-net, .pk--cup .pkg-net { display: none; }
+.pk--wrapper .pk-face { display: grid; grid-template-columns: 1fr 40%; grid-template-rows: auto auto 1fr; align-items: center; text-align: left; gap: 0 2cqw; }
+.pk.pk--wrapper .pkg-brand { justify-content: flex-start; font-size: 5.4cqw; }
+.pk.pk--wrapper .pkg-name { font-size: 7.6cqw; }
+.pk.pk--wrapper .pkg-claim { font-size: 4.4cqw; }
+.pk--wrapper .pkg-art { grid-column: 2; grid-row: 1 / span 3; height: 100%; }
+.pk--wrapper .pkg-net, .pk--wrapper .pkg-seal { display: none; }
+.pk--produceBag .pk-face { justify-content: center; }
 
-/* bright / fun */
-.pkg--bright {
-  background:
-    radial-gradient(circle, var(--pk-bg2) 0 6px, transparent 7px) 0 0 / 34px 34px,
-    var(--pk-bg);
+/* store sticker on clear or loose items */
+.pk-sticker {
+  position: absolute; left: 50%; bottom: -2%; transform: translateX(-50%) rotate(-2deg); width: 72%;
+  background: #fff; border: .8cqw solid var(--pk-accent); border-radius: 3cqw; padding: 2cqw 3cqw; text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .25); display: flex; flex-direction: column; gap: 1cqw; color: #222; z-index: 3;
 }
-.pkg--bright .pkg-name { font-family: var(--font-display); font-size: 1.6em; text-shadow: 2px 2px 0 rgba(0, 0, 0, .25); }
-.pkg--bright .pkg-claim span {
-  background: var(--pk-accent); color: #2b1a00; padding: 7px 14px; font-size: .9em;
-  border: 3px solid #fff; border-radius: 12px; transform: rotate(-4deg);
-  box-shadow: 3px 3px 0 rgba(0, 0, 0, .25); max-width: 200px;
-}
+.pk-sticker .pkg-brand { font-size: 4.2cqw; color: var(--pk-accent); }
+.pk-sticker .pkg-lynx { width: 6cqw; height: 6cqw; min-width: 12px; min-height: 12px; }
+.pk-sticker .pkg-name { font-size: 7cqw; font-weight: 800; }
+.pk-sticker .pkg-claim span { background: none; color: var(--pk-accent); padding: 0; }
+.pk-sticker .pkg-net { font-size: 3.4cqw; margin: 0; }
+.pk--loose .pk-sticker { width: 64%; bottom: -6%; }
+.pk-sticker .pkg-name { font-size: 6.2cqw; }
+.pk--clamshell .pk-sticker { top: 3%; bottom: auto; width: 80%; transform: translateX(-50%) rotate(-1deg); }
+.pk--tray .pk-sticker { left: auto; right: -3%; bottom: -6%; width: 56%; transform: rotate(-3deg); }
+.pk--bowl .pk-sticker { bottom: 3%; width: 70%; }
 
-/* sporty */
-.pkg--sporty {
-  background: repeating-linear-gradient(-55deg, var(--pk-bg) 0 18px, var(--pk-bg2) 18px 36px);
+/* label print styles (fonts and colors on the package) */
+.st--natural .pk-face {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M10 40 C12 28 24 22 34 24 C32 34 22 42 10 40 Z' fill='%23557a2b' fill-opacity='.07'/%3E%3C/svg%3E");
 }
-.pkg--sporty .pkg-brand { font-style: italic; font-size: 1.2em; font-weight: 900; letter-spacing: 3px; }
-.pkg--sporty .pkg-name { font-style: italic; text-transform: uppercase; font-family: var(--font-display); }
-.pkg--sporty .pkg-claim span { background: var(--pk-accent); color: #002a3a; padding: 6px 16px; transform: skew(-12deg); text-transform: uppercase; }
-
-/* Lynx Market store brand: plain and simple */
-.pkg--store { background: var(--pk-bg); border: 2px solid #d9cfbd; padding-top: 0; }
-.pkg--store .pkg-brand {
-  align-self: stretch; margin: 0 -16px; padding: 7px 10px; justify-content: center;
-  background: var(--pk-bg2); color: #fff; font-size: .78em; letter-spacing: 2px;
-  border-bottom: 4px solid var(--pk-accent);
+.st--natural .pkg-brand { font-family: var(--font-natural); font-style: italic; text-transform: none; letter-spacing: .02em; font-size: 7cqw; }
+.st--natural .pkg-name { font-family: var(--font-natural); font-weight: 700; }
+.st--natural .pkg-claim span { border-radius: 999px 1.5cqw 999px 1.5cqw; padding-left: 7cqw; position: relative; }
+.st--natural .pkg-claim span::before {
+  content: ""; position: absolute; left: 2.2cqw; top: 50%; width: 3.2cqw; height: 3.2cqw; margin-top: -1.6cqw; background: #fff; border-radius: 0 100% 0 100%;
 }
-.pkg--store .pkg-lynx { background: #fff; border-radius: 50%; padding: 1px; }
-.pkg--store .pkg-name { font-weight: 700; font-size: 1.35em; color: var(--pk-ink); }
-.pkg--store .pkg-claim span { border: 2px solid var(--pk-ink); padding: 3px 10px; border-radius: 4px; }
-
-/* fresh produce: kraft tag with a hole and string */
-.pkg--fresh {
-  background:
-    radial-gradient(circle at 50% 22px, #fffaf0 0 8px, #6b5434 9px 11px, transparent 12px),
-    repeating-linear-gradient(8deg, rgba(255, 255, 255, .08) 0 3px, transparent 3px 7px),
-    var(--pk-bg);
-  border: 2px dashed rgba(74, 53, 24, .45);
-  padding-top: 40px;
+.st--bright .pkg-name { text-shadow: .4cqw .4cqw 0 rgba(0, 0, 0, .25); }
+.st--bright .pkg-claim span { color: #2b1a00; transform: rotate(-3deg); border: .6cqw solid #fff; }
+.st--sporty .pkg-brand { font-style: italic; letter-spacing: .25em; }
+.st--sporty .pkg-name { font-style: italic; text-transform: uppercase; }
+.st--sporty .pkg-claim span { color: #002a3a; transform: skew(-12deg); text-transform: uppercase; border-radius: 0; }
+.st--store .pk-face { padding-top: 0; }
+.st--store .pkg-brand {
+  align-self: stretch; margin: 0 -3cqw; padding: 1.8cqw; background: var(--pk-bg2); color: #fff; letter-spacing: .18em; font-size: 4.6cqw;
+  border-bottom: 1cqw solid var(--pk-accent);
 }
-.pkg--fresh .pkg-brand { font-family: var(--font-hand); text-transform: none; letter-spacing: 0; font-size: 1em; }
-.pkg--fresh .pkg-name { font-family: var(--font-hand); font-size: 1.7em; font-weight: 700; }
-.pkg--fresh .pkg-name::after {
-  content: "Picked fresh daily"; white-space: nowrap; display: block; margin: 8px auto 0; width: fit-content;
-  font-family: var(--pk-font); font-size: .42em; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--pk-accent); border: 2px solid var(--pk-accent); border-radius: 4px; padding: 2px 6px; transform: rotate(-3deg);
-}
-
-/* deli: butcher paper with gingham band */
-.pkg--deli { background: var(--pk-bg); padding-top: 50px; }
-.pkg--deli::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 34px;
-  background:
-    repeating-linear-gradient(90deg, rgba(200, 67, 43, .55) 0 12px, transparent 12px 24px),
-    repeating-linear-gradient(0deg, rgba(200, 67, 43, .55) 0 12px, transparent 12px 24px), #fff;
-}
-.pkg--deli .pkg-brand {
-  position: absolute; top: 14px; left: 50%; transform: translateX(-50%); white-space: nowrap; width: max-content;
-  background: #fff; border: 3px solid var(--pk-accent); border-radius: 999px; padding: 3px 12px; color: var(--pk-accent);
-}
-.pkg--deli .pkg-name { font-family: var(--font-display); color: var(--pk-ink); }
-
-/* treats */
-.pkg--treat {
-  background:
-    radial-gradient(circle at 20% 0, var(--pk-bg2) 0 26px, transparent 27px),
-    radial-gradient(circle at 55% 0, var(--pk-bg2) 0 34px, transparent 35px),
-    radial-gradient(circle at 88% 0, var(--pk-bg2) 0 22px, transparent 23px),
-    var(--pk-bg);
-}
-.pkg--treat .pkg-brand { font-family: var(--font-script); text-transform: none; letter-spacing: 0; font-size: 1.3em; font-weight: 700; }
-.pkg--treat .pkg-name { font-family: var(--font-natural); font-style: italic; }
-.pkg--treat .pkg-claim span { background: var(--pk-accent); color: #2b1408; padding: 5px 14px; border-radius: 999px; }
-
-/* frozen */
-.pkg--frosty {
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50'%3E%3Cg stroke='%23ffffff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M25 15v20M15 25h20M18 18l14 14M32 18L18 32'/%3E%3C/g%3E%3C/svg%3E"),
-    linear-gradient(180deg, var(--pk-bg2), var(--pk-bg));
-  border: 4px solid #fff;
-}
-.pkg--frosty .pkg-brand { font-family: var(--font-display); font-size: 1em; }
-.pkg--frosty .pkg-name { font-family: var(--font-display); }
-.pkg--frosty .pkg-claim span { background: #fff; color: var(--pk-ink); border: 2px solid var(--pk-accent); padding: 5px 12px; border-radius: 10px; }
+.st--store .pkg-name { font-weight: 700; }
+.st--treat .pkg-brand { font-family: var(--font-script); text-transform: none; letter-spacing: 0; font-size: 9cqw; font-weight: 700; }
+.st--treat .pkg-name { font-family: var(--font-natural); font-style: italic; }
+.st--treat .pkg-claim span { color: #2b1408; }
+.st--frosty .pkg-claim span { background: #fff; color: var(--pk-ink); border: .6cqw solid var(--pk-accent); }
+.st--fresh .pkg-name, .st--deli .pkg-name { font-family: var(--pk-font); }
+.st--fresh .pkg-brand { color: var(--pk-accent); }
 
 /* ---------- Nutrition Facts ---------- */
 .nf {
@@ -431,8 +400,7 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 .label-card { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid #000; background: #fff; break-inside: avoid; }
 .label-card > div { overflow: hidden; position: relative; }
 .label-card .lc-front { border-right: 1.5px dashed #555; }
-.label-card .pkg { font-size: 11px; padding: 10px 8px; border-radius: 0; }
-.label-card .pkg-seal { width: 52px; height: 52px; top: 30px; right: 6px; }
+.label-card .pkg { padding: 8px 6px 22px; border-radius: 0; }
 .label-card .lc-back { padding: 6px; display: flex; flex-direction: column; }
 .label-card .nf { font-size: 9.6px; }
 .label-card .lc-price { font-size: 9px; text-align: center; padding-top: 3px; }
