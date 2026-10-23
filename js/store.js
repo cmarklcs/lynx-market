@@ -1,6 +1,6 @@
 /* Store aisles: product grid with flip-to-label cards. */
 (async function () {
-  const { esc, money, loadData, packageFront, nutritionLabel, Cart, updateCartPill, toast } = Lynx;
+  const { esc, money, loadData, packageFront, nutritionLabel } = Lynx;
   const data = await loadData();
   const root = document.getElementById("store");
   const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -19,7 +19,6 @@
       </div>
       <div class="card-actions">
         <button type="button" class="btn btn--primary flip-btn" aria-pressed="false" data-id="${esc(p.id)}">Flip to label</button>
-        ${data.cartEnabled ? `<button type="button" class="btn add-btn" data-id="${esc(p.id)}">+ Add to cart</button>` : ""}
       </div>
     </article>`;
 
@@ -62,20 +61,9 @@
   root.addEventListener("click", e => {
     const flipArea = e.target.closest(".flip");
     const flipBtn = e.target.closest(".flip-btn");
-    const addBtn = e.target.closest(".add-btn");
     if (flipArea || flipBtn) {
       const id = (flipArea || flipBtn).dataset.id;
       setFlipped(id, !isFlipped(id));
-    } else if (addBtn) {
-      const state = Cart.load();
-      const p = data.byId[addBtn.dataset.id];
-      if (Cart.change(state, p.id, 1)) {
-        const persona = data.personas.find(x => x.id === state.persona);
-        toast(`Added 1 serving of ${esc(p.name)} to ${esc(persona.name)}'s cart.`);
-        updateCartPill(data);
-      } else {
-        toast(`First, <a href="cart.html">pick a shopper on the Cart page</a>.`);
-      }
     }
   });
 

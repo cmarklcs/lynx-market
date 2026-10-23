@@ -355,6 +355,80 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 .budget-status.over { color: var(--lz-red); font-weight: 800; }
 .cart-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 
+/* ---------- Meal-plan project (cart page) ---------- */
+.save-note { font-size: .98rem; color: var(--muted); margin: -2px 0 8px; }
+.step { background: #fff; border: 2px solid var(--line); border-radius: var(--radius); padding: 14px 18px 18px; margin: 18px 0; }
+.step > h2 { margin: 0 0 8px; font-size: 1.45rem; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .3px; }
+.step-num { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lz-gold); color: var(--lz-blue); font-size: 1.1rem; flex: none; }
+.step-help { margin: 4px 0 10px; color: var(--muted); }
+.step-help.warn { color: #8a4b00; font-weight: 700; }
+.who-fields { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.who-fields label, .day-pick { font-family: var(--font-head); font-weight: 700; color: var(--lz-blue); display: flex; flex-direction: column; gap: 4px; }
+.who-fields input, .day-pick select, .add-to select {
+  font: inherit; font-family: var(--font-body); font-weight: 400; color: var(--ink);
+  padding: 7px 10px; border-radius: 10px; border: 2px solid #b8bfcc; background: #fff; min-width: min(280px, 80vw);
+}
+.personas .persona[disabled] { cursor: default; opacity: .75; }
+.kid-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
+.kid-tab {
+  font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; cursor: pointer;
+  padding: 8px 16px; border-radius: 999px; border: 3px solid var(--pc); background: #fff; color: var(--ink);
+}
+.kid-tab[aria-pressed="true"] { background: var(--pc); color: #fff; }
+.shop-layout.locked { grid-template-columns: minmax(0, 560px); }
+#planner .cart-panel { max-height: calc(100vh - 24px); overflow-y: auto; }
+#planner .shop-layout.locked .cart-panel { max-height: none; position: static; }
+@media (max-width: 900px) {
+  #planner .cart-panel { order: -1; position: static; max-height: none; }
+}
+.add-to { position: sticky; top: 0; z-index: 2; background: var(--lz-blue); color: #fff; border-radius: 10px; padding: 8px 12px; font-family: var(--font-head); }
+.add-to label { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.add-to select { min-width: 0; padding: 4px 8px; }
+.shop-list h3 { margin: 20px 0 6px; font-size: 1.25rem; text-transform: uppercase; letter-spacing: .4px; border-bottom: 3px solid var(--lz-gold); padding-bottom: 2px; color: var(--lz-blue); font-family: var(--font-head); }
+.cart-panel h3 { margin: 0 0 4px; font-size: 1.35rem; font-family: var(--font-head); color: var(--lz-blue); }
+.kid-needs { margin: 0 0 8px; font-size: .98rem; color: var(--muted); }
+.day-pick { margin-bottom: 8px; }
+.day-pick select { min-width: 0; }
+.meal-block { border-top: 2px solid var(--line); padding: 8px 0 4px; }
+.meal-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.meal-head h4 { margin: 0; font-family: var(--font-head); font-size: 1.12rem; color: var(--lz-blue); }
+.meal-head .opt { font-weight: 400; color: var(--muted); font-size: .9rem; }
+.away { font-size: .9rem; display: flex; gap: 6px; align-items: center; }
+.meal-empty { margin: 4px 0; color: var(--muted); font-style: italic; font-size: .95rem; }
+.meal-block .cart-items { max-height: none; margin: 4px 0; }
+.todo { margin: 0 0 12px; padding-left: 1.2em; }
+.todo li { margin: 3px 0; }
+.done-msg { font-family: var(--font-head); font-weight: 700; color: var(--lz-green); font-size: 1.15rem; margin: 4px 0 10px; }
+.q-group { border: 2px solid var(--line); border-radius: 12px; padding: 8px 14px 4px; margin: 14px 0; }
+.q-group legend { font-family: var(--font-head); font-weight: 700; font-size: 1.2rem; color: var(--lz-blue); padding: 0 6px; }
+.q-box { margin: 10px 0 14px; }
+.q-box label { display: block; margin-bottom: 6px; }
+.q-box textarea { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; border: 2px solid #b8bfcc; resize: vertical; background: #fff; }
+.q-box textarea:focus { border-color: var(--lz-mblue); }
+.wc { margin: 4px 0 0; font-size: .9rem; color: var(--lz-green); font-weight: 700; }
+.wc.short { color: var(--muted); font-weight: 400; }
+.pdf-help { margin-top: 12px; background: var(--gold-tint); border-left: 6px solid var(--lz-gold); border-radius: 8px; padding: 8px 14px; }
+.pdf-help p { margin: 4px 0; }
+.start-over { text-align: right; }
+
+/* PDF / printed meal plans */
+.plan-sheet { font-family: Georgia, "Times New Roman", serif; color: #000; font-size: 11pt; }
+.plan-sheet h1 { color: #000; font-size: 18pt; text-transform: none; margin: 0 0 2pt; font-family: Arial, Helvetica, sans-serif; }
+.plan-sheet h2 { color: #000; font-size: 14pt; margin: 0 0 3pt; font-family: Arial, Helvetica, sans-serif; }
+.ps-head { border-bottom: 2pt solid #000; margin-bottom: 10pt; padding-bottom: 4pt; }
+.ps-head p { margin: 2pt 0; }
+.ps-kid { margin-bottom: 14pt; }
+.ps-kid + .ps-kid { break-before: page; }
+.ps-compare { break-before: auto !important; }
+.ps-needs { margin: 0 0 6pt; font-style: italic; }
+.plan-sheet table { width: 100%; border-collapse: collapse; margin-bottom: 10pt; font-family: Arial, Helvetica, sans-serif; font-size: 10pt; }
+.plan-sheet th, .plan-sheet td { border: 1px solid #000; padding: 3pt 5pt; text-align: left; }
+.plan-sheet th { background: #eee; }
+.plan-sheet tfoot td { font-weight: 700; }
+.ps-q { break-inside: avoid; margin: 0 0 8pt; }
+.ps-prompt { margin: 0 0 2pt; }
+.ps-a { margin: 0; padding: 4pt 8pt; border-left: 3pt solid #999; white-space: pre-wrap; min-height: 14pt; }
+
 /* ---------- Label popup ---------- */
 .label-dialog {
   padding: 0; border: 0; border-radius: var(--radius); background: var(--paper); color: var(--ink);

@@ -124,34 +124,27 @@
     </section>`;
   }
 
-  /* ---------- Cart (kept only in this browser tab; nothing is sent anywhere) ---------- */
-  const CART_KEY = "lynx-market-cart";
-  const Cart = {
+  /* ---------- Meal-plan project (saved only in this browser on this device; nothing is sent anywhere) ---------- */
+  const PLAN_KEY = "lynx-market-meal-plans";
+  const Plan = {
+    blank() { return { student: "", section: "", picks: [], active: null, plans: {}, finalized: false, answers: {} }; },
     load() {
-      try { return JSON.parse(sessionStorage.getItem(CART_KEY)) || { persona: null, carts: {} }; }
-      catch { return { persona: null, carts: {} }; }
+      try { return Object.assign(Plan.blank(), JSON.parse(localStorage.getItem(PLAN_KEY)) || {}); }
+      catch { return Plan.blank(); }
     },
     save(state) {
-      try { sessionStorage.setItem(CART_KEY, JSON.stringify(state)); } catch { /* storage blocked: cart lasts until page closes */ }
+      try { localStorage.setItem(PLAN_KEY, JSON.stringify(state)); } catch { /* storage blocked: work lasts until the page closes */ }
     },
-    items(state) { return state.persona ? (state.carts[state.persona] || {}) : {}; },
-    change(state, productId, delta) {
-      if (!state.persona) return false;
-      const cart = state.carts[state.persona] = state.carts[state.persona] || {};
-      const next = (cart[productId] || 0) + delta;
-      if (next <= 0) delete cart[productId]; else cart[productId] = next;
-      Cart.save(state);
-      return true;
-    }
+    clear() { try { localStorage.removeItem(PLAN_KEY); } catch { /* ignore */ } }
   };
 
   function updateCartPill(data) {
     const pill = document.getElementById("cart-pill");
     if (!pill) return;
-    const state = Cart.load();
-    const persona = data.personas.find(x => x.id === state.persona);
-    const count = Object.values(Cart.items(state)).reduce((a, b) => a + b, 0);
-    pill.textContent = persona ? `Shopping for ${persona.name} · ${count} in cart` : "Pick a shopper";
+    const state = Plan.load();
+    const names = state.picks.map(id => (data.personas.find(x => x.id === id) || {}).name).filter(Boolean);
+    pill.textContent = state.finalized ? "My meal plans · finalized"
+      : names.length ? `My meal plans: ${names.join(" & ")}` : "Start my meal plans";
   }
 
   function toast(msg) {
@@ -209,5 +202,5 @@
     dlg.addEventListener("close", () => { if (opener) opener.focus(); });
   }
 
-  window.Lynx = { esc, money, loadData, packageFront, nutritionLabel, Cart, updateCartPill, toast, enableLabelPopups };
+  window.Lynx = { esc, money, loadData, packageFront, nutritionLabel, Plan, updateCartPill, toast, enableLabelPopups };
 })();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shopping Cart · Lynx Market</title>
+  <title>Meal Plans · Lynx Market</title>
   <meta name="description" content="Lynx Market is a pretend grocery store for a 7th grade science project. All products and numbers are made up.">
   <meta name="robots" content="noindex">
   <link rel="icon" href="img/lynx.svg" type="image/svg+xml">
@@ -31,17 +31,48 @@
   </header>
 
   <main id="main" tabindex="-1">
-      <div class="no-print">
-      <h1>Shopping Cart</h1>
-      <p class="lede">Pick a shopper. Then fill their cart with food for one day. Use the “label” links to check any product's Nutrition Facts.</p>
-      <h2 class="visually-hidden">Shoppers</h2>
-      <div id="personas" class="personas"></div>
-      <div class="shop-layout">
-        <section class="shop-list" id="shop-list" aria-label="Products you can add"></section>
-        <aside class="cart-panel" id="cart-panel" aria-label="Cart"></aside>
-      </div>
-      </div>
-      <div class="print-only cart-sheet" id="cart-sheet"></div>
+    <div class="no-print">
+      <h1 id="assign-title">Plan a Day of Meals</h1>
+      <p class="lede">Choose two shoppers and plan one day of meals for each from Lynx Market. Then finalize your carts, explain your choices, and save everything as a PDF for Toddle.</p>
+      <p class="save-note">Your work saves on this device as you go. Use the same computer and browser to keep working.</p>
+
+      <section class="step" aria-labelledby="s1">
+        <h2 id="s1"><span class="step-num">1</span> About you</h2>
+        <div class="who-fields">
+          <label>Your name <input id="student" type="text" autocomplete="off" maxlength="60"></label>
+          <label>Class or section <input id="section" type="text" autocomplete="off" maxlength="40"></label>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="s2">
+        <h2 id="s2"><span class="step-num">2</span> Pick two shoppers</h2>
+        <p id="pick-status" class="step-help" aria-live="polite"></p>
+        <div id="personas" class="personas"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s3" id="step3">
+        <h2 id="s3"><span class="step-num">3</span> Build each shopper's day</h2>
+        <div id="planner"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s4" id="step4">
+        <h2 id="s4"><span class="step-num">4</span> Finalize your carts</h2>
+        <div id="finalize"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s5" id="step5">
+        <h2 id="s5"><span class="step-num">5</span> Explain your choices</h2>
+        <div id="justify"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s6" id="step6">
+        <h2 id="s6"><span class="step-num">6</span> Save as PDF and turn it in</h2>
+        <div id="save"></div>
+      </section>
+
+      <p class="start-over"><button type="button" class="btn btn-sm" id="start-over">Start over</button></p>
+    </div>
+    <div class="print-only plan-sheet" id="plan-sheet"></div>
   </main>
 
   <footer class="site-footer">

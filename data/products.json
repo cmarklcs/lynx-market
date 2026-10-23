@@ -852,6 +852,21 @@
     ]
   },
 
+  "assignment": {
+    "title": "Plan a Day of Meals",
+    "shoppersToPick": 2,
+    "meals": ["Breakfast", "Lunch", "Snack", "Dinner", "Dessert"],
+    "requiredMeals": ["Breakfast", "Lunch", "Dinner"],
+    "minWords": 25,
+    "questions": [
+      { "id": "needs", "title": "Needs", "prompt": "How does this day fit {name}'s needs? Talk about their schedule, likes and dislikes, and any allergies or diet. Name specific foods." },
+      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s day. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating." },
+      { "id": "claims", "title": "Front-of-package claims", "prompt": "Did any claim on the front of a package try to fool you? Which food did you choose or skip because of what the label showed, not what the front said?" },
+      { "id": "budget", "title": "Budget", "prompt": "How did you stay within {name}'s {budget} budget? What trade-off did you make?" }
+    ],
+    "compareQuestion": { "id": "compare", "title": "Compare your two plans", "prompt": "What is one important difference between your two meal days, and why did you plan them differently?" }
+  },
+
   "personas": [
     { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 15.00, "color": "#d9002a",
       "details": ["Soccer practice 4–6 pm", "Needs a pre-practice snack", "Won't eat anything green"] },
