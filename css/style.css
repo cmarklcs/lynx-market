@@ -369,6 +369,12 @@ table.log td.num { color: var(--muted); width: 2.5em; }
   padding: 7px 10px; border-radius: 10px; border: 2px solid #b8bfcc; background: #fff; min-width: min(280px, 80vw);
 }
 .personas .persona[disabled] { cursor: default; opacity: .75; }
+.act-group { margin: 10px 0 4px; }
+.act-group h3 { margin: 0; font-family: var(--font-head); font-size: 1.15rem; text-transform: uppercase; letter-spacing: .5px; color: var(--lz-blue); display: flex; align-items: center; gap: 8px; }
+.act-group h3::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--lz-orange); }
+.act-less h3::before { background: var(--lz-mblue); }
+.act-group .personas { margin-top: 8px; }
+.cal-need { font-size: .95rem; color: var(--muted); }
 .kid-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 14px; }
 .kid-tab {
   font-family: var(--font-head); font-weight: 700; font-size: 1.05rem; cursor: pointer;

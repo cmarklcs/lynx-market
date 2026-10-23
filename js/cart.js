@@ -21,6 +21,13 @@
   const save = () => { Plan.save(state); updateCartPill(data); };
   const words = t => (String(t || "").trim().match(/\S+/g) || []).length;
   const fill = (t, per) => t.replace(/\{name\}/g, per.name).replace(/\{budget\}/g, money(per.dailyBudget));
+  const LEVELS = A.activityLevels || { more: "More active", less: "Less active" };
+  const ONE_EACH = !!A.pickOneOfEach && NEED === 2;
+  const pickedOf = level => state.picks.map(persona).find(p => p && p.activity === level);
+  const fillCompare = t => {
+    const act = pickedOf("more"), less = pickedOf("less");
+    return t.replace(/\{active\}/g, act ? act.name : "The more active shopper").replace(/\{lessActive\}/g, less ? less.name : "the less active shopper");
+  };
 
   document.getElementById("assign-title").textContent = A.title;
 
@@ -91,8 +98,9 @@
   function renderPersonas() {
     $("pick-status").textContent = state.finalized
       ? "Your carts are finalized. Unlock them in step 4 to change shoppers."
+      : ONE_EACH ? `Pick one ${LEVELS.more.toLowerCase()} shopper and one ${LEVELS.less.toLowerCase()} shopper. Tap a card to pick or un-pick it. ${state.picks.length} of ${NEED} picked.`
       : `Tap a card to pick or un-pick a shopper. ${state.picks.length} of ${NEED} picked.`;
-    $("personas").innerHTML = data.personas.map(per => `
+    const card = per => `
       <button type="button" class="persona" style="--pc:${esc(per.color)}" aria-pressed="${state.picks.includes(per.id)}" data-id="${esc(per.id)}" ${state.finalized ? "disabled" : ""}>
         <span class="persona-head">
           <span class="avatar" aria-hidden="true">${esc(per.name[0])}</span>
@@ -100,8 +108,12 @@
         </span>
         <ul>${per.details.map(d => `<li>${esc(d)}</li>`).join("")}</ul>
         <span class="budget">Daily budget: ${money(per.dailyBudget)}</span>
+        ${per.calorieRange ? `<span class="cal-need">Needs about ${per.calorieRange.map(n => n.toLocaleString()).join("–")} calories a day</span>` : ""}
         <span class="chosen">✓ Picked</span>
-      </button>`).join("");
+      </button>`;
+    $("personas").innerHTML = ONE_EACH
+      ? ["more", "less"].map(l => `<div class="act-group act-${l}"><h3>${esc(LEVELS[l])}</h3><div class="personas">${data.personas.filter(p => p.activity === l).map(card).join("")}</div></div>`).join("")
+      : `<div class="personas">${data.personas.map(card).join("")}</div>`;
   }
   $("personas").addEventListener("click", e => {
     const btn = e.target.closest(".persona");
@@ -110,6 +122,10 @@
     if (state.picks.includes(id)) {
       state.picks = state.picks.filter(x => x !== id);
       if (state.active === id) state.active = state.picks[0] || null;
+    } else if (ONE_EACH && pickedOf(persona(id).activity)) {
+      const other = pickedOf(persona(id).activity);
+      toast(`You already picked ${esc(other.name)} (${esc(LEVELS[other.activity].toLowerCase())}). Pick a ${esc(LEVELS[persona(id).activity === "more" ? "less" : "more"].toLowerCase())} shopper, or un-pick ${esc(other.name)} first.`);
+      return;
     } else if (state.picks.length >= NEED) {
       toast(`You already picked ${NEED}. Tap one of them to un-pick it first.`);
       return;
@@ -225,6 +241,7 @@
     const out = [];
     if (!state.student.trim()) out.push("Type your name in step 1.");
     if (state.picks.length !== NEED) out.push(`Pick ${NEED} shoppers in step 2 (you have ${state.picks.length}).`);
+    else if (ONE_EACH && !(pickedOf("more") && pickedOf("less"))) out.push(`In step 2, pick one ${LEVELS.more.toLowerCase()} and one ${LEVELS.less.toLowerCase()} shopper.`);
     state.picks.forEach(id => {
       const per = persona(id), plan = planFor(id);
       if (!plan.day) out.push(`Choose which day of the week ${per.name}'s plan is for.`);
@@ -295,7 +312,7 @@
     const val = state.answers[key] || "";
     const n = words(val);
     return `<div class="q-box">
-      <label for="${id}"><b>${esc(q.title)}.</b> ${esc(per ? fill(q.prompt, per) : q.prompt)}</label>
+      <label for="${id}"><b>${esc(q.title)}.</b> ${esc(per ? fill(q.prompt, per) : fillCompare(q.prompt))}</label>
       <textarea id="${id}" data-key="${esc(key)}" rows="5">${esc(val)}</textarea>
       <p class="wc ${n < A.minWords ? "short" : ""}" id="${id}-wc">${n} word${n === 1 ? "" : "s"}${n < A.minWords ? ` (aim for at least ${A.minWords})` : " ✓"}</p>
     </div>`;
@@ -351,7 +368,7 @@
       }).join("");
       return `<section class="ps-kid">
         <h2>${esc(per.name)}'s day${plan.day ? ` · ${esc(plan.day)}` : ""}</h2>
-        <p class="ps-needs">${esc(per.name)}, age ${esc(per.age)}: ${per.details.map(esc).join(" · ")}</p>
+        <p class="ps-needs">${esc(per.name)}, age ${esc(per.age)}${per.activity ? ` (${esc(LEVELS[per.activity].toLowerCase())})` : ""}: ${per.details.map(esc).join(" · ")}</p>
         <table><thead><tr><th>Meal</th><th>Food</th><th>Servings</th><th>Price</th></tr></thead>
           <tbody>${rows}</tbody>
           <tfoot><tr><td colspan="3">Total spent (budget ${money(per.dailyBudget)})</td><td>${money(total)}</td></tr></tfoot></table>
@@ -364,7 +381,7 @@
       <header class="ps-head"><h1>${esc(A.title)} · Lynx Market</h1>
         <p><b>Name:</b> ${esc(state.student)} &nbsp; <b>Class:</b> ${esc(state.section)} &nbsp; <b>Date:</b> ${esc(today)}</p></header>
       ${state.picks.map(kid).join("")}
-      ${A.compareQuestion && state.picks.length > 1 ? `<section class="ps-kid ps-compare"><h2>${esc(A.compareQuestion.title)}</h2>${answer(A.compareQuestion.prompt, "", state.answers[`compare.${A.compareQuestion.id}`])}</section>` : ""}`;
+      ${A.compareQuestion && state.picks.length > 1 ? `<section class="ps-kid ps-compare"><h2>${esc(A.compareQuestion.title)}</h2>${answer(fillCompare(A.compareQuestion.prompt), "", state.answers[`compare.${A.compareQuestion.id}`])}</section>` : ""}`;
   }
 
   /* ---------- Start over ---------- */

@@ -865,19 +865,21 @@
       { "id": "claims", "title": "Front-of-package claims", "prompt": "Did any claim on the front of a package try to fool you? Which food did you choose or skip because of what the label showed, not what the front said?" },
       { "id": "budget", "title": "Budget", "prompt": "How did you stay within {name}'s {budget} budget? What trade-off did you make?" }
     ],
-    "compareQuestion": { "id": "compare", "title": "Compare your two plans", "prompt": "What is one important difference between your two meal days, and why did you plan them differently?" }
+    "pickOneOfEach": true,
+    "activityLevels": { "more": "More active", "less": "Less active" },
+    "compareQuestion": { "id": "compare", "title": "Active vs. less active", "prompt": "{active} is more active than {lessActive}. Use their calorie targets and their nutrition totals to explain why {active}'s body needs more fuel. Which totals were higher on {active}'s day, and how do those nutrients help an active body?" }
   },
 
   "personas": [
-    { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 15.00, "calorieRange": [2200, 2800], "color": "#d9002a",
+    { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 15.00, "activity": "more", "calorieRange": [2200, 2800], "color": "#d9002a",
       "details": ["Soccer practice 4–6 pm", "Needs a pre-practice snack", "Won't eat anything green"] },
-    { "id": "priya", "name": "Priya", "age": 13, "dailyBudget": 15.00, "calorieRange": [1800, 2400], "color": "#5a2049",
+    { "id": "priya", "name": "Priya", "age": 13, "dailyBudget": 15.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#5a2049",
       "details": ["Vegetarian", "Eats school lunch on Tuesdays and Thursdays", "Loves spicy food"] },
-    { "id": "marcus", "name": "Marcus", "age": 12, "dailyBudget": 15.00, "calorieRange": [2200, 2800], "color": "#007da5",
+    { "id": "marcus", "name": "Marcus", "age": 12, "dailyBudget": 15.00, "activity": "more", "calorieRange": [2200, 2800], "color": "#007da5",
       "details": ["Only 5 minutes for breakfast", "Allergic to peanuts", "Swim practice at 6 am"] },
-    { "id": "ellie", "name": "Ellie", "age": 13, "dailyBudget": 15.00, "calorieRange": [1800, 2400], "color": "#679423",
+    { "id": "ellie", "name": "Ellie", "age": 13, "dailyBudget": 15.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#679423",
       "details": ["Dislikes yogurt texture", "Family eats dinner out twice a week", "Wants dessert every night"] },
-    { "id": "sam", "name": "Sam", "age": 12, "dailyBudget": 12.00, "calorieRange": [1800, 2400], "color": "#00274c",
+    { "id": "sam", "name": "Sam", "age": 12, "dailyBudget": 12.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#00274c",
       "details": ["$12/day food budget", "Dislikes fish"] }
   ]
 }
