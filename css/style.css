@@ -411,6 +411,23 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 .pdf-help p { margin: 4px 0; }
 .start-over { text-align: right; }
 
+/* Calorie check + nutrition totals */
+.cal-line { margin: 8px 0; padding: 6px 10px; border-radius: 8px; font-size: 1rem; }
+.cal-low { background: #fde8ec; color: #8a0019; }
+.cal-ok { background: #edf5e3; color: #3c5a14; }
+.cal-high { background: #fff1dc; color: #7a4300; }
+.cal-warn { border: 2px solid var(--lz-red); border-radius: 12px; padding: 4px 14px; margin: 0 0 12px; background: #fff; }
+.cal-warn p { margin: 8px 0; }
+.tot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; margin: 8px 0; }
+.tot-card { border: 3px solid var(--pc); border-radius: 12px; padding: 10px 14px; }
+.tot-card h3 { margin: 0 0 4px; font-family: var(--font-head); color: var(--lz-blue); font-size: 1.25rem; }
+.tot-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.tot-table th, .tot-table td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.tot-table thead th { font-family: var(--font-head); font-size: .88rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.tot-table tbody th { font-weight: 700; }
+.tot-table td:last-child { text-align: right; }
+.tot-note { font-size: .92rem; color: var(--muted); margin: 6px 0; }
+
 /* PDF / printed meal plans */
 .plan-sheet { font-family: Georgia, "Times New Roman", serif; color: #000; font-size: 11pt; }
 .plan-sheet h1 { color: #000; font-size: 18pt; text-transform: none; margin: 0 0 2pt; font-family: Arial, Helvetica, sans-serif; }
@@ -425,6 +442,10 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 .plan-sheet th, .plan-sheet td { border: 1px solid #000; padding: 3pt 5pt; text-align: left; }
 .plan-sheet th { background: #eee; }
 .plan-sheet tfoot td { font-weight: 700; }
+.plan-sheet .tot-table { width: 70%; }
+.plan-sheet .tot-table caption { text-align: left; font-weight: 700; font-family: Arial, Helvetica, sans-serif; padding-bottom: 3pt; }
+.plan-sheet .tot-table td:last-child { text-align: right; }
+.plan-sheet .tot-note { color: #000; font-size: 9pt; margin: -6pt 0 8pt; }
 .ps-q { break-inside: avoid; margin: 0 0 8pt; }
 .ps-prompt { margin: 0 0 2pt; }
 .ps-a { margin: 0; padding: 4pt 8pt; border-left: 3pt solid #999; white-space: pre-wrap; min-height: 14pt; }

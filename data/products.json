@@ -858,6 +858,7 @@
     "meals": ["Breakfast", "Lunch", "Snack", "Dinner", "Dessert"],
     "requiredMeals": ["Breakfast", "Lunch", "Dinner"],
     "minWords": 25,
+    "awayMealCalories": { "Breakfast": 400, "Lunch": 650, "Snack": 200, "Dinner": 750, "Dessert": 300 },
     "questions": [
       { "id": "needs", "title": "Needs", "prompt": "How does this day fit {name}'s needs? Talk about their schedule, likes and dislikes, and any allergies or diet. Name specific foods." },
       { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s day. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating." },
@@ -868,15 +869,15 @@
   },
 
   "personas": [
-    { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 15.00, "color": "#d9002a",
+    { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 15.00, "calorieRange": [2200, 2800], "color": "#d9002a",
       "details": ["Soccer practice 4–6 pm", "Needs a pre-practice snack", "Won't eat anything green"] },
-    { "id": "priya", "name": "Priya", "age": 13, "dailyBudget": 15.00, "color": "#5a2049",
+    { "id": "priya", "name": "Priya", "age": 13, "dailyBudget": 15.00, "calorieRange": [1800, 2400], "color": "#5a2049",
       "details": ["Vegetarian", "Eats school lunch on Tuesdays and Thursdays", "Loves spicy food"] },
-    { "id": "marcus", "name": "Marcus", "age": 12, "dailyBudget": 15.00, "color": "#007da5",
+    { "id": "marcus", "name": "Marcus", "age": 12, "dailyBudget": 15.00, "calorieRange": [2200, 2800], "color": "#007da5",
       "details": ["Only 5 minutes for breakfast", "Allergic to peanuts", "Swim practice at 6 am"] },
-    { "id": "ellie", "name": "Ellie", "age": 13, "dailyBudget": 15.00, "color": "#679423",
+    { "id": "ellie", "name": "Ellie", "age": 13, "dailyBudget": 15.00, "calorieRange": [1800, 2400], "color": "#679423",
       "details": ["Dislikes yogurt texture", "Family eats dinner out twice a week", "Wants dessert every night"] },
-    { "id": "sam", "name": "Sam", "age": 12, "dailyBudget": 12.00, "color": "#00274c",
+    { "id": "sam", "name": "Sam", "age": 12, "dailyBudget": 12.00, "calorieRange": [1800, 2400], "color": "#00274c",
       "details": ["$12/day food budget", "Dislikes fish"] }
   ]
 }

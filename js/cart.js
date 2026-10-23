@@ -1,6 +1,7 @@
 /* Shopping cart project: pick two shoppers, plan a day of meals for each, finalize,
    explain the choices, and save it all as a PDF for Toddle.
-   The cart shows food names, servings and prices only — never nutrition totals. */
+   While shopping, the cart shows food names, servings and prices only. Nutrition totals appear
+   when students check/finalize their carts, and in the PDF. */
 (async function () {
   const { esc, money, loadData, Plan, updateCartPill, toast, enableLabelPopups } = Lynx;
   const data = await loadData();
@@ -32,6 +33,52 @@
     const p = planFor(id);
     return A.meals.reduce((sum, m) => sum + Object.entries(p.meals[m].items)
       .reduce((s, [pid, q]) => s + (data.byId[pid] ? data.byId[pid].price * q : 0), 0), 0);
+  }
+
+  /* ---------- Nutrition totals (shown at finalize and in the PDF) ---------- */
+  const NUTRIENTS = [
+    ["totalFatG", "Total fat", "g", 78], ["satFatG", "Saturated fat", "g", 20], ["cholesterolMg", "Cholesterol", "mg", 300],
+    ["sodiumMg", "Sodium", "mg", 2300], ["carbsG", "Total carbohydrate", "g", 275], ["fiberG", "Dietary fiber", "g", 28],
+    ["totalSugarsG", "Total sugars", "g", null], ["addedSugarsG", "Added sugars", "g", 50], ["proteinG", "Protein", "g", null]
+  ];
+  const AWAY = A.awayMealCalories || {};
+  const fmt = n => (Math.round(n * 10) / 10).toLocaleString();
+  function totals(id) {
+    const plan = planFor(id), t = { calories: 0, awayCalories: 0, awayMeals: [] };
+    NUTRIENTS.forEach(([k]) => { t[k] = 0; });
+    A.meals.forEach(m => {
+      const meal = plan.meals[m];
+      if (meal.away) { t.awayMeals.push(m); t.awayCalories += AWAY[m] || 0; return; }
+      Object.entries(meal.items).forEach(([pid, q]) => {
+        const p = data.byId[pid]; if (!p) return;
+        t.calories += p.calories * q;
+        NUTRIENTS.forEach(([k]) => { t[k] += (p[k] || 0) * q; });
+      });
+    });
+    t.dayCalories = t.calories + t.awayCalories;
+    return t;
+  }
+  const range = per => per.calorieRange || [1800, 2400];
+  function calStatus(id) {
+    const [lo, hi] = range(persona(id)), c = totals(id).dayCalories;
+    return c < lo ? "low" : c > hi ? "high" : "ok";
+  }
+  const STATUS_TEXT = { low: "Not enough", ok: "In range", high: "More than needed" };
+  function calorieLine(id) {
+    const per = persona(id), t = totals(id), [lo, hi] = range(per), st = calStatus(id);
+    return `<p class="cal-line cal-${st}"><b>${fmt(t.dayCalories)} calories</b> · ${esc(per.name)} needs about ${lo.toLocaleString()}–${hi.toLocaleString()} · <b>${STATUS_TEXT[st]}</b></p>`;
+  }
+  function totalsTable(id, forPrint) {
+    const t = totals(id);
+    const rows = NUTRIENTS.map(([k, label, unit, dv]) =>
+      `<tr><th scope="row">${label}</th><td>${fmt(t[k])} ${unit}</td><td>${dv ? Math.round(t[k] / dv * 100) + "%" : ""}</td></tr>`).join("");
+    const away = t.awayMeals.length
+      ? `<p class="tot-note">Calories include about ${t.awayCalories.toLocaleString()} estimated for meals away from home (${t.awayMeals.map(m => m.toLowerCase()).join(", ")}). The other nutrients count Lynx Market food only.</p>` : "";
+    return `${forPrint ? "" : calorieLine(id)}
+      <table class="tot-table"><caption>${forPrint ? "Nutrition totals for the day" : `<span class="visually-hidden">${esc(persona(id).name)}'s nutrition totals</span>`}</caption>
+        <thead><tr><th scope="col">Nutrient</th><th scope="col">Total for the day</th><th scope="col">% Daily Value*</th></tr></thead>
+        <tbody>${forPrint ? `<tr><th scope="row">Calories</th><td>${fmt(t.dayCalories)}</td><td>Target ${range(persona(id)).map(n => n.toLocaleString()).join("–")}</td></tr>` : ""}${rows}</tbody></table>
+      ${away}`;
   }
 
   /* ---------- Step 1: name ---------- */
@@ -129,6 +176,7 @@
           <label class="day-pick">Which day is this?
             <select id="day" ${locked ? "disabled" : ""}><option value="">Choose a day</option>${DAYS.map(d => `<option ${plan.day === d ? "selected" : ""}>${d}</option>`).join("")}</select></label>
           ${meals}
+          ${state.calorieCheck && !locked ? calorieLine(per.id) : ""}
           <div class="budget-box">
             <div class="budget-line"><span>Spent</span><span>${money(total)} of ${money(per.dailyBudget)}</span></div>
             <div class="meter ${over ? "over" : ""}" role="progressbar" aria-label="Budget used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pctUsed)}"><span style="width:${pctUsed}%"></span></div>
@@ -192,19 +240,29 @@
   function renderFinalize() {
     const el = $("finalize");
     if (state.finalized) {
-      el.innerHTML = `<p class="done-msg">✓ Your carts are finalized.</p>
+      el.innerHTML = `<p class="done-msg">✓ Your carts are finalized. Here are each shopper's nutrition totals for the day.</p>
+        <div class="tot-grid">${state.picks.map(id => `<div class="tot-card" style="--pc:${esc(persona(id).color)}"><h3>${esc(persona(id).name)}'s day</h3>${totalsTable(id, false)}</div>`).join("")}</div>
+        <p class="tot-note">* % Daily Value is based on a 2,000-calorie diet, like the labels.</p>
         <button type="button" class="btn" id="unlock">Unlock my carts to make changes</button>`;
       return;
     }
     const list = problems();
+    const short = list.length ? [] : state.picks.filter(id => calStatus(id) === "low");
     el.innerHTML = `${list.length ? `<p class="step-help">Before you can finalize:</p><ul class="todo">${list.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`
-      : `<p class="step-help">Everything is ready. Once you finalize, your carts lock so you can write about them.</p>`}
-      <button type="button" class="btn btn--primary" id="finalize-btn" ${list.length ? "disabled" : ""}>Finalize my carts</button>`;
+      : state.calorieCheck && short.length ? `<div class="cal-warn" role="alert"><p><b>Not enough food yet.</b> Add more food in step 3, then try again.</p>${short.map(calorieLine).join("")}</div>`
+      : `<p class="step-help">Everything is ready. When you finalize, we check that each shopper gets enough calories, then lock your carts so you can write about them.</p>`}
+      <button type="button" class="btn btn--primary" id="finalize-btn" ${list.length ? "disabled" : ""}>${state.calorieCheck && short.length ? "Check again and finalize" : "Finalize my carts"}</button>`;
   }
   $("finalize").addEventListener("click", e => {
     if (e.target.id === "finalize-btn" && !problems().length) {
+      if (state.picks.some(id => calStatus(id) === "low")) {
+        state.calorieCheck = true; save(); renderAll();
+        $("finalize").querySelector(".cal-warn").focus?.();
+        $("s4").scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
       state.finalized = true; save(); renderAll();
-      $("s5").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("s4").scrollIntoView({ behavior: "smooth", block: "start" });
       const first = $("justify").querySelector("textarea");
       if (first) setTimeout(() => first.focus({ preventScroll: true }), 400);
     } else if (e.target.id === "unlock") {
@@ -297,6 +355,7 @@
         <table><thead><tr><th>Meal</th><th>Food</th><th>Servings</th><th>Price</th></tr></thead>
           <tbody>${rows}</tbody>
           <tfoot><tr><td colspan="3">Total spent (budget ${money(per.dailyBudget)})</td><td>${money(total)}</td></tr></tfoot></table>
+        ${totalsTable(id, true)}
         ${A.questions.map(q => answer(fill(q.prompt, per), q.title, state.answers[`${id}.${q.id}`])).join("")}
       </section>`;
     };
