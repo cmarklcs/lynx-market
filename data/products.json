@@ -861,7 +861,7 @@
     "awayMealCalories": { "Breakfast": 400, "Lunch": 650, "Snack": 200, "Dinner": 750, "Dessert": 300 },
     "questions": [
       { "id": "needs", "title": "Needs", "prompt": "How does this day fit {name}'s needs? Talk about their schedule, likes and dislikes, and any allergies or diet. Name specific foods." },
-      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s day. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating." },
+      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s day. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating. Then pick one number from {name}'s nutrition totals and explain what it means for their day." },
       { "id": "claims", "title": "Front-of-package claims", "prompt": "Did any claim on the front of a package try to fool you? Which food did you choose or skip because of what the label showed, not what the front said?" },
       { "id": "budget", "title": "Budget", "prompt": "How did you stay within {name}'s {budget} budget? What trade-off did you make?" }
     ],
