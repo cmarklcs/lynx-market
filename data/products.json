@@ -2,7 +2,7 @@
   "settings": {
     "storeName": "Lynx Market",
     "tagline": "Your friendly neighborhood grocery",
-    "showInNav": { "logs": true, "mayas-week": true, "cart": true }
+    "showInNav": { "logs": true, "mayas-week": false, "cart": true }
   },
 
   "aisles": ["Breakfast", "Dairy", "Drinks", "Snacks", "Deli & Prepared", "Produce", "Pantry", "Frozen"],
@@ -853,21 +853,29 @@
   },
 
   "assignment": {
-    "title": "Plan a Day of Meals",
+    "title": "Plan Three Days of Meals",
     "shoppersToPick": 2,
+    "daysPerShopper": 3,
+    "minDifferentFoods": 3,
     "meals": ["Breakfast", "Lunch", "Snack", "Dinner", "Dessert"],
     "requiredMeals": ["Breakfast", "Lunch", "Dinner"],
     "minWords": 25,
+    "aisleMinWords": 15,
     "awayMealCalories": { "Breakfast": 400, "Lunch": 650, "Snack": 200, "Dinner": 750, "Dessert": 300 },
+    "aisleQuestions": [
+      { "id": "halo", "title": "Healthy-looking packages", "picks": 2, "prompt": "Find 2 foods whose packaging or advertising makes them seem healthy. What strategies are the packages using to make you think that? Look at the words, colors, pictures and badges." },
+      { "id": "servings", "title": "Servings per container", "picks": 2, "prompt": "Find the 2 items with the most servings per container. Why does the number of servings per container matter when you read a label?" },
+      { "id": "lookalikes", "title": "Look-alikes", "picks": 2, "prompt": "Pick 2 foods that seem similar, like two yogurts or two drinks. Which numbers on their labels are most different, and which one would you choose?" }
+    ],
     "questions": [
-      { "id": "needs", "title": "Needs", "prompt": "How does this day fit {name}'s needs? Talk about their schedule, likes and dislikes, and any allergies or diet. Name specific foods." },
-      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s day. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating. Then pick one number from {name}'s nutrition totals and explain what it means for their day." },
+      { "id": "needs", "title": "Needs and variety", "prompt": "How do {name}'s three days fit their needs? Talk about their schedule, likes and dislikes, and any allergies or diet, and name specific foods. How did you make the days different from each other?" },
+      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s days. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating. Then pick one number from {name}'s nutrition totals and explain what it means for their day." },
       { "id": "claims", "title": "Front-of-package claims", "prompt": "Did any claim on the front of a package try to fool you? Which food did you choose or skip because of what the label showed, not what the front said?" },
-      { "id": "budget", "title": "Budget", "prompt": "How did you stay within {name}'s {budget} budget? What trade-off did you make?" }
+      { "id": "budget", "title": "Budget", "prompt": "How did you keep each of {name}'s days within the {budget} budget? What trade-off did you make?" }
     ],
     "pickOneOfEach": true,
     "activityLevels": { "more": "More active", "less": "Less active" },
-    "compareQuestion": { "id": "compare", "title": "Active vs. less active", "prompt": "{active} is more active than {lessActive}. Use their calorie targets and their nutrition totals to explain why {active}'s body needs more fuel. Which totals were higher on {active}'s day, and how do those nutrients help an active body?" }
+    "compareQuestion": { "id": "compare", "title": "Active vs. less active", "prompt": "{active} is more active than {lessActive}. Use their calorie targets and their nutrition totals to explain why {active}'s body needs more fuel. Which totals were higher on {active}'s days, and how do those nutrients help an active body?" }
   },
 
   "personas": [

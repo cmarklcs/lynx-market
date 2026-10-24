@@ -32,8 +32,8 @@
 
   <main id="main" tabindex="-1">
     <div class="no-print">
-      <h1 id="assign-title">Plan a Day of Meals</h1>
-      <p class="lede">Choose one more-active and one less-active shopper and plan one day of meals for each from Lynx Market. Then finalize your carts, explain your choices, and save everything as a PDF for Toddle.</p>
+      <h1 id="assign-title">Plan Three Days of Meals</h1>
+      <p class="lede">First, explore the store's aisles. Then choose one more-active and one less-active shopper and plan three different days of meals for each from Lynx Market. Finalize your carts, explain your choices, and save everything as a PDF for Toddle.</p>
       <p class="save-note">Your work saves on this device as you go. Use the same computer and browser to keep working.</p>
 
       <section class="step" aria-labelledby="s1">
@@ -45,30 +45,38 @@
       </section>
 
       <section class="step" aria-labelledby="s2">
-        <h2 id="s2"><span class="step-num">2</span> Pick two shoppers</h2>
+        <h2 id="s2"><span class="step-num">2</span> Shop the aisles</h2>
+        <p class="step-help">Walk the store before you plan. <a href="index.html" target="_blank" rel="noopener">Open the store aisles in a new tab</a>, or click any food name below to see its package and label.</p>
+        <div id="aisle"></div>
+      </section>
+
+      <div id="locked-steps">
+      <section class="step" aria-labelledby="s3">
+        <h2 id="s3"><span class="step-num">3</span> Pick two shoppers</h2>
         <p id="pick-status" class="step-help" aria-live="polite"></p>
         <div id="personas"></div>
       </section>
 
-      <section class="step" aria-labelledby="s3" id="step3">
-        <h2 id="s3"><span class="step-num">3</span> Build each shopper's day</h2>
+      <section class="step" aria-labelledby="s4" id="step4">
+        <h2 id="s4"><span class="step-num">4</span> Build three days for each shopper</h2>
         <div id="planner"></div>
       </section>
 
-      <section class="step" aria-labelledby="s4" id="step4">
-        <h2 id="s4"><span class="step-num">4</span> Finalize your carts</h2>
+      <section class="step" aria-labelledby="s5" id="step5">
+        <h2 id="s5"><span class="step-num">5</span> Finalize your carts</h2>
         <div id="finalize"></div>
       </section>
 
-      <section class="step" aria-labelledby="s5" id="step5">
-        <h2 id="s5"><span class="step-num">5</span> Explain your choices</h2>
+      <section class="step" aria-labelledby="s6" id="step6">
+        <h2 id="s6"><span class="step-num">6</span> Explain your choices</h2>
         <div id="justify"></div>
       </section>
 
-      <section class="step" aria-labelledby="s6" id="step6">
-        <h2 id="s6"><span class="step-num">6</span> Save as PDF and turn it in</h2>
+      <section class="step" aria-labelledby="s7" id="step7">
+        <h2 id="s7"><span class="step-num">7</span> Save as PDF and turn it in</h2>
         <div id="save"></div>
       </section>
+      </div>
 
       <p class="start-over"><button type="button" class="btn btn-sm" id="start-over">Start over</button></p>
     </div>
