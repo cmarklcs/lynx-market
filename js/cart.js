@@ -220,6 +220,23 @@
 
   /* ---------- Step 4: planner ---------- */
   let addMeal = A.meals[0];
+  let pendingSwitch = null; // { id, di, weekday } when a student picks a new weekday for a day that already has food
+  const emptyDay = id => planFor(id).days.findIndex((d, i) => !foodSet(id, i).size && !A.meals.some(m => d.meals[m].away));
+  function switchNotice(per, di) {
+    if (!pendingSwitch || pendingSwitch.id !== per.id || pendingSwitch.di !== di) return "";
+    const d = dayOf(per.id, di), w = pendingSwitch.weekday, free = emptyDay(per.id);
+    return `<div class="switch-note" role="alert" tabindex="-1">
+      <p><b>Day ${di + 1} already has ${esc(d.day)}'s food.</b> What do you want to do?</p>
+      ${free >= 0 ? `<button type="button" class="btn btn--primary btn-sm" data-switch="new">Plan ${esc(w)} as a new day (Day ${free + 1})</button>` : `<p class="step-help">All ${DAYS_N} days already have food, so ${esc(w)} can't be a new day.</p>`}
+      <button type="button" class="btn btn-sm" data-switch="rename">Change Day ${di + 1} from ${esc(d.day)} to ${esc(w)}</button>
+      <button type="button" class="btn btn-sm" data-switch="cancel">Never mind</button>
+    </div>`;
+  }
+  function nextButton(per, di) {
+    if (di < DAYS_N - 1) return `<button type="button" class="btn btn--primary next-day" data-goto-day="${di + 1}">Next: plan Day ${di + 2} →</button>`;
+    const other = state.picks.find(x => x !== per.id);
+    return other ? `<button type="button" class="btn btn--primary next-day" data-goto-kid="${esc(other)}">Next: plan ${esc(persona(other).name)}'s days →</button>` : "";
+  }
   function renderPlanner() {
     const el = $("planner");
     if (!state.picks.length) { el.innerHTML = `<p class="step-help">Pick your shoppers in step 3 first.</p>`; return; }
@@ -232,8 +249,13 @@
       const p = persona(id);
       return `<button type="button" class="kid-tab" style="--pc:${esc(p.color)}" aria-pressed="${id === per.id}" data-kid="${esc(id)}">${esc(p.name)}</button>`;
     }).join("")}</div>`;
-    const dayTabs = `<div class="day-tabs" role="group" aria-label="Choose ${esc(per.name)}'s day">${Array.from({ length: DAYS_N }, (_, i) =>
-      `<button type="button" class="day-tab" aria-pressed="${i === di}" data-day="${i}">${esc(dayLabel(per.id, i))}</button>`).join("")}</div>`;
+    const dayStatus = i => {
+      const n = foodSet(per.id, i).size, d = dayOf(per.id, i);
+      return n ? `${n} food${n === 1 ? "" : "s"}` : A.meals.some(m => d.meals[m].away) ? "Started" : "Empty";
+    };
+    const dayTabs = `<p class="day-tabs-label">Click a day to plan it:</p>
+      <div class="day-tabs" role="group" aria-label="Choose which of ${esc(per.name)}'s days to plan">${Array.from({ length: DAYS_N }, (_, i) =>
+      `<button type="button" class="day-tab" aria-pressed="${i === di}" data-day="${i}"><span class="dt-name">Day ${i + 1}</span><span class="dt-week">${esc(dayOf(per.id, i).day || "No day picked")}</span><span class="dt-status">${dayStatus(i)}</span></button>`).join("")}</div>`;
 
     const used = planFor(per.id).days.map((d, i) => i !== di && d.day).filter(Boolean);
     const meals = A.meals.map(m => {
@@ -272,8 +294,9 @@
         <aside class="cart-panel" aria-label="${esc(per.name)}'s cart for ${esc(dayLabel(per.id, di))}">
           <h3>${esc(per.name)}'s cart · Day ${di + 1}</h3>
           <p class="kid-needs">${per.details.map(esc).join(" · ")}</p>
-          <label class="day-pick">Which day of the week?
+          <label class="day-pick">Day ${di + 1} is on:
             <select id="day" ${locked ? "disabled" : ""}><option value="">Choose a day</option>${WEEK.map(d => `<option value="${d}" ${day.day === d ? "selected" : ""} ${used.includes(d) ? "disabled" : ""}>${d}${used.includes(d) ? " (used)" : ""}</option>`).join("")}</select></label>
+          ${switchNotice(per, di)}
           ${meals}
           ${state.calorieCheck && !locked ? calorieLine(per.id, di) : ""}
           <div class="budget-box">
@@ -281,13 +304,23 @@
             <div class="meter ${over ? "over" : ""}" role="progressbar" aria-label="Budget used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pctUsed)}"><span style="width:${pctUsed}%"></span></div>
             <p class="budget-status ${over ? "over" : ""}" aria-live="polite">${over ? `Over budget by ${money(-left)}` : `${money(left)} left to spend`}</p>
           </div>
+          ${locked ? "" : nextButton(per, di)}
         </aside>
       </div>`;
   }
   $("planner").addEventListener("change", e => {
     if (e.target.id === "add-meal") { addMeal = e.target.value; return; }
     const d = dayOf(state.active, activeDay(state.active));
-    if (e.target.id === "day") { d.day = e.target.value; save(); renderAfterEdit(); $("day").focus(); }
+    if (e.target.id === "day") {
+      const di = activeDay(state.active), w = e.target.value;
+      if (d.day && w && w !== d.day && foodSet(state.active, di).size) {
+        pendingSwitch = { id: state.active, di, weekday: w };
+        renderPlanner();
+        $("planner").querySelector(".switch-note")?.focus();
+        return;
+      }
+      d.day = w; pendingSwitch = null; save(); renderAfterEdit(); $("day").focus();
+    }
     else if (e.target.dataset.away) {
       d.meals[e.target.dataset.away].away = e.target.checked;
       save(); renderAfterEdit();
@@ -295,7 +328,34 @@
     }
   });
   $("planner").addEventListener("click", e => {
+    const sw = e.target.closest("[data-switch]");
+    if (sw && pendingSwitch) {
+      const { id, di, weekday } = pendingSwitch;
+      pendingSwitch = null;
+      if (sw.dataset.switch === "rename") dayOf(id, di).day = weekday;
+      else if (sw.dataset.switch === "new") {
+        const free = emptyDay(id);
+        if (free >= 0) {
+          planFor(id).days.forEach(x => { if (x.day === weekday) x.day = ""; });
+          dayOf(id, free).day = weekday; state.activeDay[id] = free;
+          toast(`Now planning ${esc(persona(id).name)}'s Day ${free + 1} (${esc(weekday)}). Day ${di + 1} is still ${esc(dayOf(id, di).day)}.`);
+        }
+      }
+      save(); renderAfterEdit();
+      $("planner").querySelector(".day-tab[aria-pressed=true]")?.focus();
+      return;
+    }
+    const gd = e.target.closest("[data-goto-day]"), gk = e.target.closest("[data-goto-kid]");
+    if (gd || gk) {
+      if (gk) { state.active = gk.dataset.gotoKid; state.activeDay[state.active] = 0; }
+      else state.activeDay[state.active] = +gd.dataset.gotoDay;
+      pendingSwitch = null; save(); renderPlanner();
+      $("s4").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("planner").querySelector(".day-tab[aria-pressed=true]")?.focus({ preventScroll: true });
+      return;
+    }
     const tab = e.target.closest("[data-kid]"), dtab = e.target.closest("[data-day]");
+    if (tab || dtab) pendingSwitch = null;
     if (tab) { state.active = tab.dataset.kid; save(); renderPlanner(); $("planner").querySelector(`[data-kid="${tab.dataset.kid}"]`).focus(); return; }
     if (dtab) { state.activeDay[state.active] = +dtab.dataset.day; save(); renderPlanner(); $("planner").querySelector(`[data-day="${dtab.dataset.day}"]`).focus(); return; }
     const add = e.target.closest("[data-add]"), inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]");
