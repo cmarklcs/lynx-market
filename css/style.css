@@ -430,6 +430,8 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 .aisle-picks a { font-family: var(--font-body); font-weight: 400; font-size: .95rem; }
 .aisle-q textarea { width: 100%; font: inherit; padding: 10px 12px; border-radius: 10px; border: 2px solid #b8bfcc; resize: vertical; background: #fff; }
 .done-tag { font-size: .9rem; color: var(--lz-green); margin-left: 6px; }
+.plan-locked { background: var(--gold-tint); border: 2px dashed var(--lz-gold); border-radius: 12px; padding: 12px 16px; margin: 0 0 14px; }
+.plan-locked p { margin: 0 0 8px; }
 .lock-note { background: var(--gold-tint); border: 2px dashed var(--lz-gold); border-radius: 12px; padding: 12px 16px; font-family: var(--font-head); font-weight: 700; color: var(--lz-blue); margin: 18px 0 0; }
 #locked-steps.is-locked .step { opacity: .45; filter: grayscale(.6); }
 .day-tabs-label { margin: 0 0 4px; font-family: var(--font-head); font-weight: 700; color: var(--lz-blue); }

@@ -288,6 +288,8 @@
     </section>`;
 
     el.innerHTML = `<p class="step-help">Plan ${DAYS_N} days for each shopper. Each day needs a different day of the week, and no two days can be alike: change at least ${A.minDifferentFoods} foods between any two days.</p>
+      ${locked ? `<div class="plan-locked"><p><b>🔒 Your carts are finalized, so they're locked.</b> To change your days or foods, unlock them. Your written answers stay saved.</p>
+        <button type="button" class="btn btn--primary btn-sm" id="unlock-plan">Unlock my carts to make changes</button></div>` : ""}
       ${kidTabs}${dayTabs}
       <div class="shop-layout ${locked ? "locked" : ""}">
         ${shop}
@@ -328,6 +330,11 @@
     }
   });
   $("planner").addEventListener("click", e => {
+    if (e.target.id === "unlock-plan") {
+      state.finalized = false; save(); renderAll();
+      $("planner").querySelector(".day-tab[aria-pressed=true]")?.focus();
+      return;
+    }
     const sw = e.target.closest("[data-switch]");
     if (sw && pendingSwitch) {
       const { id, di, weekday } = pendingSwitch;
@@ -588,5 +595,7 @@
     document.body.classList.toggle("is-finalized", state.finalized);
   }
   window.addEventListener("beforeprint", renderPrint);
+  // Carts finalized under older rules (e.g. one day per shopper) reopen so the missing days can be planned.
+  if (state.finalized && problems().length) { state.finalized = false; save(); }
   renderAll();
 })();
