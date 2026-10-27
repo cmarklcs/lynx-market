@@ -541,6 +541,37 @@
       ${cq && state.picks.length > 1 ? `<section class="ps-kid ps-compare"><h2>${esc(cq.title)}</h2>${answer(fillCompare(cq.prompt), "", state.answers[`compare.${cq.id}`])}</section>` : ""}`;
   }
 
+  /* ---------- Backup: download progress to a file / load it back (nothing leaves the device) ---------- */
+  $("backup-download").addEventListener("click", () => {
+    const stamp = new Date();
+    const file = { app: "lynx-market", kind: "meal-plan-progress", version: 1, savedAt: stamp.toISOString(), state };
+    const blob = new Blob([JSON.stringify(file, null, 1)], { type: "application/json" });
+    const who = (state.student || "student").trim().replace(/[^\w -]+/g, "").slice(0, 40) || "student";
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `Lynx Market progress - ${who} - ${stamp.toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    toast("Progress downloaded. Save the file somewhere safe, like your Google Drive.");
+  });
+  $("backup-load").addEventListener("click", () => $("backup-file").click());
+  $("backup-file").addEventListener("change", async e => {
+    const f = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    let file;
+    try { file = JSON.parse(await f.text()); } catch { file = null; }
+    if (!file || file.app !== "lynx-market" || !file.state || typeof file.state !== "object") {
+      toast("That file isn't a Lynx Market progress file. Choose the .json file you downloaded from this page.");
+      return;
+    }
+    const when = file.savedAt ? new Date(file.savedAt).toLocaleString() : "an earlier date";
+    const name = file.state.student ? ` for ${file.state.student}` : "";
+    if (!confirm(`Load the progress${name} saved on ${when}?\n\nThis replaces the work currently on this page.`)) return;
+    Plan.save(Object.assign(Plan.blank(), file.state));
+    location.reload();
+  });
+
   /* ---------- Start over ---------- */
   $("start-over").addEventListener("click", () => {
     if (!confirm("Erase everything on this page (your aisle answers, shoppers, carts and answers) on this device and start over?")) return;

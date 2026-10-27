@@ -34,7 +34,14 @@
     <div class="no-print">
       <h1 id="assign-title">Plan Three Days of Meals</h1>
       <p class="lede">First, explore the store's aisles. Then choose one more-active and one less-active shopper and plan three different days of meals for each from Lynx Market. Finalize your carts, explain your choices, and save everything as a PDF for Toddle.</p>
-      <p class="save-note">Your work saves on this device as you go. Use the same computer and browser to keep working.</p>
+      <div class="backup-bar">
+        <p class="save-note"><b>Your work saves automatically</b> in this browser on this computer. To keep a backup, or to keep working on a different computer, download your progress and save the file to your Google Drive.</p>
+        <div class="backup-buttons">
+          <button type="button" class="btn btn-sm" id="backup-download">⬇ Download my progress</button>
+          <button type="button" class="btn btn-sm" id="backup-load">⬆ Load saved progress</button>
+          <input type="file" id="backup-file" accept=".json,application/json" hidden>
+        </div>
+      </div>
 
       <section class="step" aria-labelledby="s1">
         <h2 id="s1"><span class="step-num">1</span> About you</h2>

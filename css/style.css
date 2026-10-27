@@ -357,6 +357,10 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 
 /* ---------- Meal-plan project (cart page) ---------- */
 .save-note { font-size: .98rem; color: var(--muted); margin: -2px 0 8px; }
+.backup-bar { background: #fff; border: 2px solid var(--line); border-radius: var(--radius); padding: 10px 16px; margin: 10px 0 0; }
+.backup-bar .save-note { margin: 0 0 8px; color: var(--ink); }
+.backup-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+
 .step { background: #fff; border: 2px solid var(--line); border-radius: var(--radius); padding: 14px 18px 18px; margin: 18px 0; }
 .step > h2 { margin: 0 0 8px; font-size: 1.45rem; display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .3px; }
 .step-num { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lz-gold); color: var(--lz-blue); font-size: 1.1rem; flex: none; }
