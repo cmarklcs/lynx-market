@@ -853,9 +853,9 @@
   },
 
   "assignment": {
-    "title": "Plan Three Days of Meals",
+    "title": "Plan a Day of Meals",
     "shoppersToPick": 2,
-    "daysPerShopper": 3,
+    "daysPerShopper": 1,
     "minDifferentFoods": 3,
     "meals": ["Breakfast", "Lunch", "Snack", "Dinner", "Dessert"],
     "requiredMeals": ["Breakfast", "Lunch", "Dinner"],
@@ -868,26 +868,41 @@
       { "id": "lookalikes", "title": "Look-alikes", "picks": 2, "prompt": "Pick 2 foods that seem similar, like two yogurts or two drinks. Which numbers on their labels are most different, and which one would you choose?" }
     ],
     "questions": [
-      { "id": "needs", "title": "Needs and variety", "prompt": "How do {name}'s three days fit their needs? Talk about their schedule, likes and dislikes, and any allergies or diet, and name specific foods. How did you make the days different from each other?" },
-      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s days. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating. Then pick one number from {name}'s nutrition totals and explain what it means for their day." },
+      { "id": "needs", "title": "Needs", "prompt": "How does {name}'s day fit their needs? Talk about their schedule, likes and dislikes, and any allergies or diet, and name specific foods." },
+      { "id": "labels", "title": "Label evidence", "prompt": "Choose two foods from {name}'s day. What did their Nutrition Facts labels show? Compare the serving size on the label to how much {name} is eating. Then pick one number from {name}'s nutrition totals and explain what it means for their day." },
       { "id": "claims", "title": "Front-of-package claims", "prompt": "Did any claim on the front of a package try to fool you? Which food did you choose or skip because of what the label showed, not what the front said?" },
-      { "id": "budget", "title": "Budget", "prompt": "How did you keep each of {name}'s days within the {budget} budget? What trade-off did you make?" }
+      { "id": "budget", "title": "Budget", "prompt": "How did you keep {name}'s day within the {budget} budget? What trade-off did you make?" }
     ],
     "pickOneOfEach": true,
     "activityLevels": { "more": "More active", "less": "Less active" },
-    "compareQuestion": { "id": "compare", "title": "Active vs. less active", "prompt": "{active} is more active than {lessActive}. Use their calorie targets and their nutrition totals to explain why {active}'s body needs more fuel. Which totals were higher on {active}'s days, and how do those nutrients help an active body?" }
+    "compareQuestion": { "id": "compare", "title": "Active vs. less active", "prompt": "{active} is more active than {lessActive}. Use their calorie targets and their nutrition totals to explain why {active}'s body needs more fuel. Which totals were higher on {active}'s day, and how do those nutrients help an active body?" },
+    "reflection": {
+      "title": "Food cost and health",
+      "questions": [
+        { "id": "cheapCalories", "title": "Cheap calories", "prompt": "Imagine a shopper is over budget but still needs more calories for the day. Expensive foods like salmon won't fit. Which cheap foods at Lynx Market could you add to get those calories? Name at least two, with the price and calories per serving for each. What else do their labels show?" },
+        { "id": "poverty", "title": "Poverty and health", "prompt": "What conclusions can you draw about poverty and nutritional health? Explain why, using evidence from Lynx Market prices and Nutrition Facts labels." }
+      ]
+    },
+    "myDay": {
+      "enabled": true,
+      "budget": 15.00,
+      "details": ["Plan the foods you would like to eat", "No calorie target: just see how much you are (or aren't) eating"],
+      "questions": [
+        { "id": "myTotals", "title": "My day", "prompt": "Look at your own day's nutrition totals in step 5. Compare your calories and two other nutrients to the Daily Values. Are you eating more or less than you expected? What would you change, and why?" }
+      ]
+    }
   },
 
   "personas": [
-    { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 15.00, "activity": "more", "calorieRange": [2200, 2800], "color": "#d9002a",
+    { "id": "jordan", "name": "Jordan", "age": 12, "dailyBudget": 16.00, "activity": "more", "calorieRange": [2200, 2800], "color": "#d9002a",
       "details": ["Soccer practice 4–6 pm", "Needs a pre-practice snack", "Won't eat anything green"] },
-    { "id": "priya", "name": "Priya", "age": 13, "dailyBudget": 15.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#5a2049",
+    { "id": "priya", "name": "Priya", "age": 13, "dailyBudget": 16.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#5a2049",
       "details": ["Vegetarian", "Eats school lunch on Tuesdays and Thursdays", "Loves spicy food"] },
-    { "id": "marcus", "name": "Marcus", "age": 12, "dailyBudget": 15.00, "activity": "more", "calorieRange": [2200, 2800], "color": "#007da5",
+    { "id": "marcus", "name": "Marcus", "age": 12, "dailyBudget": 16.00, "activity": "more", "calorieRange": [2200, 2800], "color": "#007da5",
       "details": ["Only 5 minutes for breakfast", "Allergic to peanuts", "Swim practice at 6 am"] },
-    { "id": "ellie", "name": "Ellie", "age": 13, "dailyBudget": 15.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#679423",
+    { "id": "ellie", "name": "Ellie", "age": 13, "dailyBudget": 16.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#679423",
       "details": ["Dislikes yogurt texture", "Family eats dinner out twice a week", "Wants dessert every night"] },
-    { "id": "sam", "name": "Sam", "age": 12, "dailyBudget": 12.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#00274c",
-      "details": ["$12/day food budget", "Dislikes fish"] }
+    { "id": "sam", "name": "Sam", "age": 12, "dailyBudget": 13.00, "activity": "less", "calorieRange": [1800, 2400], "color": "#00274c",
+      "details": ["$13/day food budget", "Dislikes fish"] }
   ]
 }

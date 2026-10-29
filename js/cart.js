@@ -1,7 +1,7 @@
 /* Shopping cart project:
    1 name · 2 shop the aisles (unlocks the rest) · 3 pick a more-active and a less-active shopper ·
-   4 plan three different days for each · 5 finalize (calorie check, then nutrition totals) ·
-   6 explain choices · 7 save as PDF for Toddle.
+   4 plan their day(s), plus "My own day" ($15, no calorie target) · 5 finalize (calorie check, then
+   nutrition totals) · 6 explain choices · 7 save as PDF for Toddle.
    While shopping, the cart shows food names, servings and prices only. Nutrition totals appear
    after finalizing, and in the PDF. Settings live in data/products.json → "assignment". */
 (async function () {
@@ -22,7 +22,12 @@
 
   let state = Plan.load();
   const $ = id => document.getElementById(id);
-  const persona = id => data.personas.find(x => x.id === id);
+  // "My own day": a cart for the student with its own budget and no calorie target.
+  const MY = A.myDay && A.myDay.enabled ? { id: "me", name: "My own day", poss: "My", own: true, dailyBudget: A.myDay.budget || 15, color: "#8a6d00", details: A.myDay.details || [] } : null;
+  const persona = id => id === "me" ? MY : data.personas.find(x => x.id === id);
+  const poss = per => per.poss || `${per.name}'s`;
+  const carts = () => MY ? [...state.picks, "me"] : state.picks;
+  const qsFor = id => id === "me" ? A.myDay.questions || [] : A.questions;
   const save = () => { Plan.save(state); updateCartPill(data); };
   const words = t => (String(t || "").trim().match(/\S+/g) || []).length;
   const fill = (t, per) => t.replace(/\{name\}/g, per.name).replace(/\{budget\}/g, money(per.dailyBudget));
@@ -39,13 +44,15 @@
     let p = state.plans[id];
     if (!p || !Array.isArray(p.days)) p = state.plans[id] = { days: p && p.meals ? [{ day: p.day || "", meals: p.meals }] : [] };
     while (p.days.length < DAYS_N) p.days.push({ day: "", meals: {} });
+    p.days.splice(DAYS_N); // extra days from a setting with more days per shopper
     p.days.forEach(d => A.meals.forEach(m => { d.meals[m] = d.meals[m] || { away: false, items: {} }; }));
     return p;
   }
   const dayOf = (id, i) => planFor(id).days[i];
   state.activeDay = state.activeDay || {};
   const activeDay = id => Math.min(state.activeDay[id] || 0, DAYS_N - 1);
-  const dayLabel = (id, i) => `Day ${i + 1}${dayOf(id, i).day ? ` · ${dayOf(id, i).day}` : ""}`;
+  const dayLabel = (id, i) => DAYS_N === 1 ? dayOf(id, i).day || "Day" : `Day ${i + 1}${dayOf(id, i).day ? ` · ${dayOf(id, i).day}` : ""}`;
+  const dayTag = (id, i) => `${poss(persona(id))} ${DAYS_N === 1 ? "day" : `Day ${i + 1}`}`;
   const items = meal => Object.entries(meal.items).filter(([pid]) => data.byId[pid]);
   const spent = (id, i) => A.meals.reduce((s, m) => s + items(dayOf(id, i).meals[m]).reduce((t, [pid, q]) => t + data.byId[pid].price * q, 0), 0);
   const foodSet = (id, i) => new Set(A.meals.flatMap(m => dayOf(id, i).meals[m].away ? [] : items(dayOf(id, i).meals[m]).map(([pid]) => pid)));
@@ -84,19 +91,20 @@
   }
   const STATUS_TEXT = { low: "Not enough", ok: "In range", high: "More than needed" };
   function calorieLine(id, i) {
+    if (!persona(id).calorieRange) return "";
     const per = persona(id), [lo, hi] = range(per), st = calStatus(id, i);
     return `<p class="cal-line cal-${st}"><b>${esc(per.name)} · ${esc(dayLabel(id, i))}: ${fmt(totals(id, i).dayCalories)} calories</b> · needs about ${lo.toLocaleString()}–${hi.toLocaleString()} · <b>${STATUS_TEXT[st]}</b></p>`;
   }
   function totalsTable(id, forPrint) {
-    const per = persona(id), [lo, hi] = range(per);
+    const per = persona(id), [lo, hi] = range(per), target = !!per.calorieRange;
     const T = Array.from({ length: DAYS_N }, (_, i) => totals(id, i));
     const head = `<tr><th scope="col">Nutrient</th>${T.map((_, i) => `<th scope="col">${esc(dayLabel(id, i))}</th>`).join("")}<th scope="col">Daily Value*</th></tr>`;
-    const cal = `<tr><th scope="row">Calories</th>${T.map((t, i) => `<td class="${forPrint ? "" : "cal-cell cal-" + calStatus(id, i)}">${fmt(t.dayCalories)}</td>`).join("")}<td>Target ${lo.toLocaleString()}–${hi.toLocaleString()}</td></tr>`;
+    const cal = `<tr><th scope="row">Calories</th>${T.map((t, i) => `<td class="${forPrint || !target ? "" : "cal-cell cal-" + calStatus(id, i)}">${fmt(t.dayCalories)}</td>`).join("")}<td>${target ? `Target ${lo.toLocaleString()}–${hi.toLocaleString()}` : "No target"}</td></tr>`;
     const rows = NUTRIENTS.map(([k, label, unit, dv]) =>
       `<tr><th scope="row">${label} (${unit})</th>${T.map(t => `<td>${fmt(t[k])}</td>`).join("")}<td>${dv ? dv.toLocaleString() + " " + unit : ""}</td></tr>`).join("");
     const awayDays = T.map((t, i) => t.awayMeals.length ? `${dayLabel(id, i)}: ${t.awayMeals.map(m => m.toLowerCase()).join(", ")}` : "").filter(Boolean);
     const away = awayDays.length ? `<p class="tot-note">Calories include estimates for meals away from home (${esc(awayDays.join("; "))}). Other nutrients count Lynx Market food only.</p>` : "";
-    return `<table class="tot-table"><caption>${forPrint ? `${esc(per.name)}'s nutrition totals` : `<span class="visually-hidden">${esc(per.name)}'s nutrition totals</span>`}</caption>
+    return `<table class="tot-table"><caption>${forPrint ? `${esc(poss(per))} nutrition totals` : `<span class="visually-hidden">${esc(poss(per))} nutrition totals</span>`}</caption>
       <thead>${head}</thead><tbody>${cal}${rows}</tbody></table>${away}`;
   }
 
@@ -104,7 +112,7 @@
   const student = $("student"), section = $("section");
   student.value = state.student; section.value = state.section;
   student.addEventListener("input", () => { state.student = student.value; save(); renderFinalize(); renderPrint(); });
-  section.addEventListener("input", () => { state.section = section.value; save(); renderPrint(); });
+  section.addEventListener("change", () => { state.section = section.value; save(); renderPrint(); });
 
   /* ---------- Step 2: shop the aisles ---------- */
   state.aisle = state.aisle || {};
@@ -234,18 +242,19 @@
   }
   function nextButton(per, di) {
     if (di < DAYS_N - 1) return `<button type="button" class="btn btn--primary next-day" data-goto-day="${di + 1}">Next: plan Day ${di + 2} →</button>`;
-    const other = state.picks.find(x => x !== per.id);
-    return other ? `<button type="button" class="btn btn--primary next-day" data-goto-kid="${esc(other)}">Next: plan ${esc(persona(other).name)}'s days →</button>` : "";
+    const list = carts(), other = persona(list[list.indexOf(per.id) + 1]);
+    const what = !other ? "" : other.own ? "your own day" : `${poss(other)} ${DAYS_N === 1 ? "day" : "days"}`;
+    return other ? `<button type="button" class="btn btn--primary next-day" data-goto-kid="${esc(other.id)}">Next: plan ${esc(what)} →</button>` : "";
   }
   function renderPlanner() {
     const el = $("planner");
-    if (!state.picks.length) { el.innerHTML = `<p class="step-help">Pick your shoppers in step 3 first.</p>`; return; }
-    if (!state.picks.includes(state.active)) state.active = state.picks[0];
+    if (!carts().length) { el.innerHTML = `<p class="step-help">Pick your shoppers in step 3 first.</p>`; return; }
+    if (!carts().includes(state.active)) state.active = carts()[0];
     const per = persona(state.active), di = activeDay(per.id), day = dayOf(per.id, di), locked = state.finalized;
     const total = spent(per.id, di), left = per.dailyBudget - total, over = left < -0.004;
     const pctUsed = Math.min(100, (total / per.dailyBudget) * 100);
 
-    const kidTabs = `<div class="kid-tabs" role="group" aria-label="Choose a shopper">${state.picks.map(id => {
+    const kidTabs = `<div class="kid-tabs" role="group" aria-label="Choose a cart">${carts().map(id => {
       const p = persona(id);
       return `<button type="button" class="kid-tab" style="--pc:${esc(p.color)}" aria-pressed="${id === per.id}" data-kid="${esc(id)}">${esc(p.name)}</button>`;
     }).join("")}</div>`;
@@ -253,8 +262,8 @@
       const n = foodSet(per.id, i).size, d = dayOf(per.id, i);
       return n ? `${n} food${n === 1 ? "" : "s"}` : A.meals.some(m => d.meals[m].away) ? "Started" : "Empty";
     };
-    const dayTabs = `<p class="day-tabs-label">Click a day to plan it:</p>
-      <div class="day-tabs" role="group" aria-label="Choose which of ${esc(per.name)}'s days to plan">${Array.from({ length: DAYS_N }, (_, i) =>
+    const dayTabs = DAYS_N === 1 ? "" : `<p class="day-tabs-label">Click a day to plan it:</p>
+      <div class="day-tabs" role="group" aria-label="Choose which of ${esc(poss(per))} days to plan">${Array.from({ length: DAYS_N }, (_, i) =>
       `<button type="button" class="day-tab" aria-pressed="${i === di}" data-day="${i}"><span class="dt-name">Day ${i + 1}</span><span class="dt-week">${esc(dayOf(per.id, i).day || "No day picked")}</span><span class="dt-status">${dayStatus(i)}</span></button>`).join("")}</div>`;
 
     const used = planFor(per.id).days.map((d, i) => i !== di && d.day).filter(Boolean);
@@ -277,7 +286,7 @@
     }).join("");
 
     const shop = locked ? "" : `<section class="shop-list" aria-label="Foods you can add">
-      <div class="add-to"><label>Add foods to <b>${esc(per.name)}'s ${esc(dayLabel(per.id, di))}</b>
+      <div class="add-to"><label>Add foods to <b>${esc(DAYS_N === 1 ? dayTag(per.id, di) : `${poss(per)} ${dayLabel(per.id, di)}`)}</b>
         <select id="add-meal">${A.meals.map(m => `<option ${m === addMeal ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label></div>
       ${data.aisles.map(a => `<h3>${esc(a)}</h3>` + data.products.filter(p => p.aisle === a).map(p => `
         <div class="shop-row">
@@ -287,22 +296,24 @@
         </div>`).join("")).join("")}
     </section>`;
 
-    el.innerHTML = `<p class="step-help">Plan ${DAYS_N} days for each shopper. Each day needs a different day of the week, and no two days can be alike: change at least ${A.minDifferentFoods} foods between any two days.</p>
+    const help = DAYS_N === 1 ? `Plan one day of meals for each shopper. Pick which day of the week it is, and stay within their budget.${MY ? ` Then plan <b>your own day</b>: any foods you like, with a ${money(MY.dailyBudget)} budget and no calorie target.` : ""}`
+      : `Plan ${DAYS_N} days for each shopper. Each day needs a different day of the week, and no two days can be alike: change at least ${A.minDifferentFoods} foods between any two days.${MY ? ` Then plan your own days (${money(MY.dailyBudget)} a day, no calorie target).` : ""}`;
+    el.innerHTML = `<p class="step-help">${help}</p>
       ${locked ? `<div class="plan-locked"><p><b>🔒 Your carts are finalized, so they're locked.</b> To change your days or foods, unlock them. Your written answers stay saved.</p>
         <button type="button" class="btn btn--primary btn-sm" id="unlock-plan">Unlock my carts to make changes</button></div>` : ""}
       ${kidTabs}${dayTabs}
       <div class="shop-layout ${locked ? "locked" : ""}">
         ${shop}
-        <aside class="cart-panel" aria-label="${esc(per.name)}'s cart for ${esc(dayLabel(per.id, di))}">
-          <h3>${esc(per.name)}'s cart · Day ${di + 1}</h3>
+        <aside class="cart-panel" aria-label="${esc(poss(per))} cart for ${esc(dayLabel(per.id, di))}">
+          <h3>${esc(poss(per))} cart${DAYS_N === 1 ? "" : ` · Day ${di + 1}`}</h3>
           <p class="kid-needs">${per.details.map(esc).join(" · ")}</p>
-          <label class="day-pick">Day ${di + 1} is on:
-            <select id="day" ${locked ? "disabled" : ""}><option value="">Choose a day</option>${WEEK.map(d => `<option value="${d}" ${day.day === d ? "selected" : ""} ${used.includes(d) ? "disabled" : ""}>${d}${used.includes(d) ? " (used)" : ""}</option>`).join("")}</select></label>
+          ${per.own ? "" : `<label class="day-pick">${DAYS_N === 1 ? "Day of the week:" : `Day ${di + 1} is on:`}
+            <select id="day" ${locked ? "disabled" : ""}><option value="">Choose a day</option>${WEEK.map(d => `<option value="${d}" ${day.day === d ? "selected" : ""} ${used.includes(d) ? "disabled" : ""}>${d}${used.includes(d) ? " (used)" : ""}</option>`).join("")}</select></label>`}
           ${switchNotice(per, di)}
           ${meals}
           ${state.calorieCheck && !locked ? calorieLine(per.id, di) : ""}
           <div class="budget-box">
-            <div class="budget-line"><span>Spent on Day ${di + 1}</span><span>${money(total)} of ${money(per.dailyBudget)}</span></div>
+            <div class="budget-line"><span>Spent${DAYS_N === 1 ? "" : ` on Day ${di + 1}`}</span><span>${money(total)} of ${money(per.dailyBudget)}</span></div>
             <div class="meter ${over ? "over" : ""}" role="progressbar" aria-label="Budget used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pctUsed)}"><span style="width:${pctUsed}%"></span></div>
             <p class="budget-status ${over ? "over" : ""}" aria-live="polite">${over ? `Over budget by ${money(-left)}` : `${money(left)} left to spend`}</p>
           </div>
@@ -315,7 +326,7 @@
     const d = dayOf(state.active, activeDay(state.active));
     if (e.target.id === "day") {
       const di = activeDay(state.active), w = e.target.value;
-      if (d.day && w && w !== d.day && foodSet(state.active, di).size) {
+      if (DAYS_N > 1 && d.day && w && w !== d.day && foodSet(state.active, di).size) {
         pendingSwitch = { id: state.active, di, weekday: w };
         renderPlanner();
         $("planner").querySelector(".switch-note")?.focus();
@@ -345,7 +356,7 @@
         if (free >= 0) {
           planFor(id).days.forEach(x => { if (x.day === weekday) x.day = ""; });
           dayOf(id, free).day = weekday; state.activeDay[id] = free;
-          toast(`Now planning ${esc(persona(id).name)}'s Day ${free + 1} (${esc(weekday)}). Day ${di + 1} is still ${esc(dayOf(id, di).day)}.`);
+          toast(`Now planning ${esc(poss(persona(id)))} Day ${free + 1} (${esc(weekday)}). Day ${di + 1} is still ${esc(dayOf(id, di).day)}.`);
         }
       }
       save(); renderAfterEdit();
@@ -375,7 +386,7 @@
     const next = (m.items[pid] || 0) + (dec ? -1 : 1);
     if (next <= 0) delete m.items[pid]; else m.items[pid] = next;
     save();
-    if (add) toast(`Added 1 serving of ${esc(data.byId[pid].name)} to ${esc(persona(state.active).name)}'s Day ${di + 1} ${esc(meal.toLowerCase())}.`);
+    if (add) toast(`Added 1 serving of ${esc(data.byId[pid].name)} to ${esc(poss(persona(state.active)))} ${DAYS_N === 1 ? "" : `Day ${di + 1} `}${esc(meal.toLowerCase())}.`);
     const scroll = window.scrollY;
     renderAfterEdit();
     window.scrollTo(0, scroll);
@@ -395,11 +406,11 @@
     if (!aisleDone()) out.push("Finish step 2: Shop the aisles.");
     if (state.picks.length !== NEED) out.push(`Pick ${NEED} shoppers in step 3 (you have ${state.picks.length}).`);
     else if (ONE_EACH && !(pickedOf("more") && pickedOf("less"))) out.push(`In step 3, pick one ${LEVELS.more.toLowerCase()} and one ${LEVELS.less.toLowerCase()} shopper.`);
-    state.picks.forEach(id => {
+    carts().forEach(id => {
       const per = persona(id), days = planFor(id).days;
       days.forEach((d, i) => {
-        const tag = `${per.name}'s Day ${i + 1}`;
-        if (!d.day) out.push(`Choose a day of the week for ${tag}.`);
+        const tag = dayTag(id, i);
+        if (!d.day && !per.own) out.push(`Choose a day of the week for ${tag}.`);
         A.requiredMeals.forEach(m => {
           const meal = d.meals[m];
           if (!meal.away && !items(meal).length) out.push(`Add food to ${tag} ${m.toLowerCase()} (or mark it "eating away from home").`);
@@ -410,7 +421,7 @@
       for (let i = 0; i < days.length; i++) for (let j = i + 1; j < days.length; j++) {
         if (!foodSet(id, i).size || !foodSet(id, j).size) continue;
         const n = foodsDifferent(id, i, j), need = A.minDifferentFoods - n;
-        if (n < A.minDifferentFoods) out.push(`${per.name}'s Day ${i + 1} and Day ${j + 1} are ${n ? "too similar" : "identical"}. Swap in at least ${need} different food${need === 1 ? "" : "s"}.`);
+        if (n < A.minDifferentFoods) out.push(`${poss(per)} Day ${i + 1} and Day ${j + 1} are ${n ? "too similar" : "identical"}. Swap in at least ${need} different food${need === 1 ? "" : "s"}.`);
       }
     });
     return out;
@@ -419,8 +430,8 @@
   function renderFinalize() {
     const el = $("finalize");
     if (state.finalized) {
-      el.innerHTML = `<p class="done-msg">✓ Your carts are finalized. Here are each shopper's nutrition totals for each day.</p>
-        <div class="tot-grid tot-grid--days">${state.picks.map(id => `<div class="tot-card" style="--pc:${esc(persona(id).color)}"><h3>${esc(persona(id).name)} (${esc((LEVELS[persona(id).activity] || "").toLowerCase())})</h3>${totalsTable(id, false)}</div>`).join("")}</div>
+      el.innerHTML = `<p class="done-msg">✓ Your carts are finalized. Here are the nutrition totals for each cart.</p>
+        <div class="tot-grid tot-grid--days">${carts().map(id => `<div class="tot-card" style="--pc:${esc(persona(id).color)}"><h3>${esc(persona(id).name)}${persona(id).own ? "" : ` (${esc((LEVELS[persona(id).activity] || "").toLowerCase())})`}</h3>${totalsTable(id, false)}</div>`).join("")}</div>
         <p class="tot-note">* Daily Values are the amounts used on Nutrition Facts labels, based on a 2,000-calorie diet. Calories are shaded green (in range), red (not enough) or orange (more than needed).</p>
         <button type="button" class="btn" id="unlock">Unlock my carts to make changes</button>`;
       return;
@@ -449,8 +460,9 @@
   /* ---------- Step 6: justification ---------- */
   const allQuestions = () => {
     const qs = [];
-    state.picks.forEach(id => A.questions.forEach(q => qs.push({ key: `${id}.${q.id}` })));
+    carts().forEach(id => qsFor(id).forEach(q => qs.push({ key: `${id}.${q.id}` })));
     if (A.compareQuestion && state.picks.length > 1) qs.push({ key: `compare.${A.compareQuestion.id}` });
+    if (A.reflection) A.reflection.questions.forEach(q => qs.push({ key: `reflect.${q.id}` }));
     return qs;
   };
   function qBox(key, q, prompt) {
@@ -464,14 +476,17 @@
   function renderJustify() {
     const el = $("justify");
     if (!state.finalized) { el.innerHTML = `<p class="step-help">Finalize your carts in step 5 to unlock the questions.</p>`; return; }
-    const groups = state.picks.map(id => {
+    const group = id => {
       const per = persona(id);
-      return `<fieldset class="q-group"><legend>${esc(per.name)}'s ${DAYS_N === 1 ? "day" : "days"}</legend>
-        ${A.questions.map(q => qBox(`${id}.${q.id}`, q, fill(q.prompt, per))).join("")}</fieldset>`;
-    }).join("");
+      return `<fieldset class="q-group"><legend>${esc(poss(per))} ${DAYS_N === 1 ? "day" : "days"}</legend>
+        ${qsFor(id).map(q => qBox(`${id}.${q.id}`, q, fill(q.prompt, per))).join("")}</fieldset>`;
+    };
     const cq = A.compareQuestion;
     const cmp = cq && state.picks.length > 1 ? `<fieldset class="q-group"><legend>${esc(cq.title)}</legend>${qBox(`compare.${cq.id}`, cq, fillCompare(cq.prompt))}</fieldset>` : "";
-    el.innerHTML = `<p class="step-help">Write in complete sentences. Use evidence from the Nutrition Facts labels and the nutrition totals in step 5. Click any food name to see its label again.</p>${groups}${cmp}`;
+    const R = A.reflection;
+    const refl = R ? `<fieldset class="q-group"><legend>${esc(R.title)}</legend>${R.questions.map(q => qBox(`reflect.${q.id}`, q, q.prompt)).join("")}</fieldset>` : "";
+    el.innerHTML = `<p class="step-help">Write in complete sentences. Use evidence from the Nutrition Facts labels and the nutrition totals in step 5. Click any food name to see its label again.</p>
+      ${state.picks.map(group).join("")}${cmp}${refl}${MY ? group("me") : ""}`;
   }
   $("justify").addEventListener("input", e => {
     const ta = e.target.closest("textarea[data-key]");
@@ -532,11 +547,11 @@
           <tbody>${rows}</tbody><tfoot><tr><td colspan="2">Total spent (budget ${money(per.dailyBudget)})</td><td>${money(spent(id, i))}</td></tr></tfoot></table></div>`;
       };
       return `<section class="ps-kid">
-        <h2>${esc(per.name)}'s ${DAYS_N === 1 ? "day" : "days"}</h2>
-        <p class="ps-needs">${esc(per.name)}, age ${esc(per.age)}${per.activity ? ` (${esc((LEVELS[per.activity] || "").toLowerCase())})` : ""}: ${per.details.map(esc).join(" · ")}</p>
+        <h2>${esc(per.own ? per.name : `${poss(per)} ${DAYS_N === 1 ? "day" : "days"}`)}</h2>
+        <p class="ps-needs">${per.own ? "" : `${esc(per.name)}, age ${esc(per.age)}${per.activity ? ` (${esc((LEVELS[per.activity] || "").toLowerCase())})` : ""}: `}${per.details.map(esc).join(" · ")}</p>
         ${Array.from({ length: DAYS_N }, (_, i) => dayTable(i)).join("")}
         ${state.finalized ? totalsTable(id, true) : ""}
-        ${A.questions.map(q => answer(fill(q.prompt, per), q.title, state.answers[`${id}.${q.id}`])).join("")}
+        ${qsFor(id).map(q => answer(fill(q.prompt, per), q.title, state.answers[`${id}.${q.id}`])).join("")}
       </section>`;
     };
     const cq = A.compareQuestion;
@@ -545,7 +560,9 @@
         <p><b>Name:</b> ${esc(state.student)} &nbsp; <b>Class:</b> ${esc(state.section)} &nbsp; <b>Date:</b> ${esc(today)}</p></header>
       ${aisle}
       ${state.picks.map(kid).join("")}
-      ${cq && state.picks.length > 1 ? `<section class="ps-kid ps-compare"><h2>${esc(cq.title)}</h2>${answer(fillCompare(cq.prompt), "", state.answers[`compare.${cq.id}`])}</section>` : ""}`;
+      ${cq && state.picks.length > 1 ? `<section class="ps-kid ps-compare"><h2>${esc(cq.title)}</h2>${answer(fillCompare(cq.prompt), "", state.answers[`compare.${cq.id}`])}</section>` : ""}
+      ${A.reflection ? `<section class="ps-kid ps-compare"><h2>${esc(A.reflection.title)}</h2>${A.reflection.questions.map(q => answer(q.prompt, q.title, state.answers[`reflect.${q.id}`])).join("")}</section>` : ""}
+      ${MY ? kid("me") : ""}`;
   }
 
   /* ---------- Backup: download progress to a file / load it back (nothing leaves the device) ---------- */

@@ -368,7 +368,7 @@ table.log td.num { color: var(--muted); width: 2.5em; }
 .step-help.warn { color: #8a4b00; font-weight: 700; }
 .who-fields { display: flex; flex-wrap: wrap; gap: 12px 24px; }
 .who-fields label, .day-pick { font-family: var(--font-head); font-weight: 700; color: var(--lz-blue); display: flex; flex-direction: column; gap: 4px; }
-.who-fields input, .day-pick select, .add-to select {
+.who-fields input, .who-fields select, .day-pick select, .add-to select {
   font: inherit; font-family: var(--font-body); font-weight: 400; color: var(--ink);
   padding: 7px 10px; border-radius: 10px; border: 2px solid #b8bfcc; background: #fff; min-width: min(280px, 80vw);
 }
