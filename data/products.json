@@ -877,10 +877,11 @@
     "activityLevels": { "more": "More active", "less": "Less active" },
     "compareQuestion": { "id": "compare", "title": "Active vs. less active", "prompt": "{active} is more active than {lessActive}. Use their calorie targets and their nutrition totals to explain why {active}'s body needs more fuel. Which totals were higher on {active}'s day, and how do those nutrients help an active body?" },
     "reflection": {
-      "title": "Food cost and health",
+      "title": "Food cost, sugar and health",
       "questions": [
         { "id": "cheapCalories", "title": "Cheap calories", "prompt": "Imagine a shopper is over budget but still needs more calories for the day. Expensive foods like salmon won't fit. Which cheap foods at Lynx Market could you add to get those calories? Name at least two, with the price and calories per serving for each. What else do their labels show?" },
-        { "id": "poverty", "title": "Poverty and health", "prompt": "What conclusions can you draw about poverty and nutritional health? Explain why, using evidence from Lynx Market prices and Nutrition Facts labels." }
+        { "id": "poverty", "title": "Poverty and health", "prompt": "What conclusions can you draw about poverty and nutritional health? Explain why, using evidence from Lynx Market prices and Nutrition Facts labels." },
+        { "id": "sugar", "title": "Sugar", "prompt": "Look at all three completed days: your two shoppers' and your own. Where did each person get the most sugar from? Name the food and its grams of sugar. What substitutions would you recommend? (The foods don't have to be sold at Lynx Market.)" }
       ]
     },
     "myDay": {

@@ -486,7 +486,7 @@
     const R = A.reflection;
     const refl = R ? `<fieldset class="q-group"><legend>${esc(R.title)}</legend>${R.questions.map(q => qBox(`reflect.${q.id}`, q, q.prompt)).join("")}</fieldset>` : "";
     el.innerHTML = `<p class="step-help">Write in complete sentences. Use evidence from the Nutrition Facts labels and the nutrition totals in step 5. Click any food name to see its label again.</p>
-      ${state.picks.map(group).join("")}${cmp}${refl}${MY ? group("me") : ""}`;
+      ${state.picks.map(group).join("")}${cmp}${MY ? group("me") : ""}${refl}`;
   }
   $("justify").addEventListener("input", e => {
     const ta = e.target.closest("textarea[data-key]");
@@ -561,8 +561,8 @@
       ${aisle}
       ${state.picks.map(kid).join("")}
       ${cq && state.picks.length > 1 ? `<section class="ps-kid ps-compare"><h2>${esc(cq.title)}</h2>${answer(fillCompare(cq.prompt), "", state.answers[`compare.${cq.id}`])}</section>` : ""}
-      ${A.reflection ? `<section class="ps-kid ps-compare"><h2>${esc(A.reflection.title)}</h2>${A.reflection.questions.map(q => answer(q.prompt, q.title, state.answers[`reflect.${q.id}`])).join("")}</section>` : ""}
-      ${MY ? kid("me") : ""}`;
+      ${MY ? kid("me") : ""}
+      ${A.reflection ? `<section class="ps-kid ps-compare"><h2>${esc(A.reflection.title)}</h2>${A.reflection.questions.map(q => answer(q.prompt, q.title, state.answers[`reflect.${q.id}`])).join("")}</section>` : ""}`;
   }
 
   /* ---------- Backup: download progress to a file / load it back (nothing leaves the device) ---------- */
